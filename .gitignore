@@ -1,0 +1,10 @@
+/.gradle/
+/bin/
+*.classpath
+*.project
+.settings/
+settings.gradle
+gradlew.bat
+gradlew
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
