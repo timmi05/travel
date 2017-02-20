@@ -8,3 +8,6 @@ gradlew.bat
 gradlew
 gradle/wrapper/gradle-wrapper.jar
 gradle/wrapper/gradle-wrapper.properties
+*.class
+build/libs/travel.jar
+build/
