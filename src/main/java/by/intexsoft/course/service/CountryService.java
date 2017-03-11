@@ -20,5 +20,5 @@ public interface CountryService {
 	 * Save new {@link Country}
 	 */
 	@Transactional
-	void save(Country country);
+	Country save(Country country);
 }

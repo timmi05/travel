@@ -16,3 +16,8 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.8.6'    
 }
 
+war.dependsOn 'client:npm_run_build'
+
+war {
+    from "client/dist"
+}
