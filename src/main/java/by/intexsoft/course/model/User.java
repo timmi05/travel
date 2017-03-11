@@ -33,10 +33,40 @@ public class User extends AbstractPersistable<Integer> {
 	@Column
 	public String password;
 
+	/**
+	 * Confirm user password
+	 */
 	@Transient
 	public String confirmPassword;
 
+	/**
+	 * First Name of user
+	 */
+	@Column
+	public String firstName;
+
+	/**
+	 * Last Name of user
+	 */
+	@Column
+	public String lastName;
+
+	/**
+	 * Phone number of user
+	 */
+	@Column
+	public String phoneNumber;
+
+	/**
+	 * E-mail of user
+	 */
+	@Column
+	public String mail;
+
+	/**
+	 * All roles of user
+	 */
 	@ManyToMany
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles;
+	public Set<Role> roles;
 }
