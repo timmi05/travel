@@ -26,4 +26,10 @@ public interface UserService {
 	 */
 	@Transactional
 	User save(User user);
+	
+	/**
+	 * Save new {@link User}
+	 */
+	@Transactional
+	void deleteAll();
 }

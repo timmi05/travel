@@ -17,8 +17,16 @@ public interface CountryService {
 	List<Country> findAll();
 
 	/**
+	 * Find {@link Country}
+	 */
+	Country findByName(String name);
+
+	/**
 	 * Save new {@link Country}
 	 */
 	@Transactional
 	Country save(Country country);
+	
+	@Transactional
+	void deleteAll();
 }

@@ -24,7 +24,17 @@ public class CountryServiceImpl implements CountryService {
 	}
 
 	@Override
+	public Country findByName(String name) {
+		return ñountryRepository.findByName(name);
+	}
+
+	@Override
 	public Country save(Country country) {
-		return ñountryRepository.save(country);
+		return ñountryRepository.saveAndFlush(country);
+	}
+
+	@Override
+	public void deleteAll() {
+		ñountryRepository.deleteAll();
 	}
 }

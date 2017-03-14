@@ -7,11 +7,10 @@ import org.springframework.stereotype.Service;
 
 import by.intexsoft.course.model.User;
 import by.intexsoft.course.repository.UserRepository;
-import by.intexsoft.course.service.CountryService;
 import by.intexsoft.course.service.UserService;
 
 /**
- * It used to implement the techniques {@link CountryService}
+ * It used to implement the techniques {@link UserService}
  */
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,6 +30,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User save(User user) {
-		return userRepository.save(user);
+		return userRepository.saveAndFlush(user);
+	}
+
+	@Override
+	public void deleteAll() {
+		userRepository.deleteAll();
 	}
 }
