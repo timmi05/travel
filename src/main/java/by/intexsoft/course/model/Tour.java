@@ -8,14 +8,12 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 /**
  * Model for tours table
  */
 @Entity
 @Table(name = "tours")
-public class Tour extends AbstractPersistable<Integer> {
+public class Tour extends AbstractModel {
 
 	private static final long serialVersionUID = -782215207665987375L;
 
@@ -59,13 +57,13 @@ public class Tour extends AbstractPersistable<Integer> {
 	 * Start date of the tour
 	 */
 	@Column
-	public Date start;
+	public Date startDate;
 
 	/**
 	 * End date of the tour
 	 */
 	@Column
-	public Date end;
+	public Date endDate;
 
 	/**
 	 * Hot tour
@@ -74,7 +72,7 @@ public class Tour extends AbstractPersistable<Integer> {
 	public Boolean hot;
 
 	/**
-	 * {@link Country} for the tour
+	 * Tour for {@link User}
 	 */
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
 	public User user;

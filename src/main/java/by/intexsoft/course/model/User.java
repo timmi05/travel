@@ -10,14 +10,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 /**
  * Model for users table
  */
 @Entity
 @Table(name = "users")
-public class User extends AbstractPersistable<Integer> {
+public class User extends AbstractModel {
 
 	private static final long serialVersionUID = 7232927597102396226L;
 
@@ -42,19 +40,19 @@ public class User extends AbstractPersistable<Integer> {
 	/**
 	 * First Name of user
 	 */
-	@Column
+	@Column(name = "first_name")
 	public String firstName;
 
 	/**
 	 * Last Name of user
 	 */
-	@Column
+	@Column(name = "last_name")
 	public String lastName;
 
 	/**
 	 * Phone number of user
 	 */
-	@Column
+	@Column(name = "phone_number")
 	public String phoneNumber;
 
 	/**

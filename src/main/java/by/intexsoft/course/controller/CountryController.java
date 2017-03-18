@@ -7,44 +7,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import by.intexsoft.course.model.Country;
-import by.intexsoft.course.model.User;
 import by.intexsoft.course.service.CountryService;
-import by.intexsoft.course.service.UserService;
 
 /**
- * RestController for {@link Country} 
+ * RestController for {@link Country}
  */
 @RestController
-public class AppController {
+public class CountryController {
 
 	@Autowired
 	private CountryService countryService;
-	
-	@Autowired
-	private UserService userService;
 
 	/**
 	 * Return all {@link Country#name} in line
 	 */
 	@RequestMapping(value = "/country")
-	public List<Country> findAllCountries() {		
+	public List<Country> findAll() {
 		return countryService.findAll();
-	}
-
-	/**
-	 * Returns the word hello
-	 */
-	@RequestMapping(value = "/hi")
-	public String getHelloUsers() {
-		String message = "Hello !";
-		return message;
-	}
-	
-	/**
-	 * Return all {@link User} in line
-	 */
-	@RequestMapping(value = "/users")
-	public List<User> findAllUsers() {		
-		return userService.findAll();
 	}
 }

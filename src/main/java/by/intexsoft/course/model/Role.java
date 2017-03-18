@@ -7,14 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 /**
  * Model for {@link User} role table
  */
 @Entity
 @Table(name = "roles")
-public class Role extends AbstractPersistable<Integer> {
+public class Role extends AbstractModel {
 
 	private static final long serialVersionUID = -2482110092389856360L;
 

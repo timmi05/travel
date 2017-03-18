@@ -1,27 +1,20 @@
 import {Injectable} from '@angular/core';
 import {Http} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
-import {Country} from '../model/country';
+import {Town} from '../model/town';
 
 @Injectable()
-export class CountryService{
+export class TownService{
 
-private countriesUrl: string = 'travel/country';
+private townsUrl: string = 'travel/town';
 
     constructor(private http: Http) { }
 
-    getCountries(): Promise<Country[]> {
-        return this.http.get(this.countriesUrl)
+    getTowns(): Promise<Town[]> {
+        return this.http.get(this.townsUrl)
             .toPromise()
             .then(responce => responce.json())
             .catch(this.handleError);
-    }
-
-    addcountry(country: Country){
-        const body = JSON.stringify({name: country.name});
-        return this.http.post('travel/addcountry', body).map(() => {
-            return true;
-        });
     }
 
     private handleError(error: any): Promise<any> {

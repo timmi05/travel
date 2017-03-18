@@ -13,7 +13,10 @@ dependencies {
     compile 'org.hibernate:hibernate-entitymanager:4.3.11.Final'
     compile 'org.postgresql:postgresql:9.4-1206-jdbc41'
     compile 'commons-dbcp:commons-dbcp:1.4' 
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.6'    
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.6'  
+    
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.springframework:spring-test:4.3.0.RELEASE'
 }
 
 war.dependsOn 'client:npm_run_build'

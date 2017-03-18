@@ -27,10 +27,10 @@ public class TourServiceImpl implements TourService {
 		return tourRepository.findAll();
 	}
 
-	@Override
-	public Tour findByName(String name) {
-		return tourRepository.findByName(name);
-	}
+//	@Override
+//	public Tour findByName(String name) {
+//		return tourRepository.findByName(name);
+//	}
 
 	@Override
 	public List<Tour> findByUser(User user) {
@@ -39,27 +39,27 @@ public class TourServiceImpl implements TourService {
 
 	@Override
 	public List<Tour> findByHotelTownCountry(Country country) {
-		return tourRepository.findByHotelTownCountry(country);
+		return tourRepository.findByBookingIsNullAndArchiveFalseAndHotelTownCountry(country);
 	}
 
 	@Override
 	public List<Tour> findByHotelTown(Town town) {
-		return tourRepository.findByHotelTown(town);
+		return tourRepository.findByBookingIsNullAndArchiveFalseAndHotelTown(town);
 	}
 
 	@Override
 	public List<Tour> findByHotel(Hotel hotel) {
-		return tourRepository.findByHotel(hotel);
+		return tourRepository.findByBookingIsNullAndArchiveFalseAndHotel(hotel);
 	}
 
 	@Override
 	public List<Tour> findByCountry(Country country) {
-		return tourRepository.findByCountry(country);
+		return tourRepository.findByBookingIsNullAndArchiveFalseAndCountry(country);
 	}
 
 	@Override
 	public List<Tour> findByTown(Town town) {
-		return tourRepository.findByTown(town);
+		return tourRepository.findByBookingIsNullAndArchiveFalseAndTown(town);
 	}
 
 	@Override

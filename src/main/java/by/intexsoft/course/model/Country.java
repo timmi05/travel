@@ -4,14 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 /**
  * Model for countries table
  */
 @Entity
 @Table(name = "countries")
-public class Country extends AbstractPersistable<Integer> {
+public class Country extends AbstractModel{
 
 	private static final long serialVersionUID = 1836630999531378566L;
 

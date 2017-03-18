@@ -6,14 +6,12 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 /**
  * Model for towns table
  */
 @Entity
 @Table(name = "towns")
-public class Town extends AbstractPersistable<Integer> {
+public class Town extends AbstractModel {
 
 	private static final long serialVersionUID = -2615442138605554144L;
 

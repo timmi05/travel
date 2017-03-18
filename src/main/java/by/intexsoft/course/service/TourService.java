@@ -20,10 +20,10 @@ public interface TourService {
 	 */
 	List<Tour> findAll();
 
-	/**
-	 * Find {@link Tour}
-	 */
-	Tour findByName(String name);
+//	/**
+//	 * Find {@link Tour}
+//	 */
+//	Tour findByName(String name);
 
 	/**
 	 * Find List {@link Tour}s by {@link User}
