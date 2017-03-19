@@ -6,7 +6,7 @@ import {Country} from '../model/country';
 @Injectable()
 export class CountryService{
 
-private countriesUrl: string = 'travel/country';
+private countriesUrl: string = '/travel/country';
 
     constructor(private http: Http) { }
 

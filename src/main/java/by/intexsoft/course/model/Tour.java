@@ -56,13 +56,13 @@ public class Tour extends AbstractModel {
 	/**
 	 * Start date of the tour
 	 */
-	@Column
+	@Column(name = "start_date")
 	public Date startDate;
 
 	/**
 	 * End date of the tour
 	 */
-	@Column
+	@Column(name = "end_date")
 	public Date endDate;
 
 	/**

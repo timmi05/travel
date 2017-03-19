@@ -34,7 +34,8 @@ public class UserServiceTest {
 			user.lastName = "qwerty";
 			user.mail = "qwerty";
 			user.phoneNumber = "qwerty";
-			userService.save(user);			
+
+			userService.save(user);
 		}
 	}
 

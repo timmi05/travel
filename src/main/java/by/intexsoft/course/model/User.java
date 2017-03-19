@@ -1,9 +1,10 @@
 package by.intexsoft.course.model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -64,7 +65,9 @@ public class User extends AbstractModel {
 	/**
 	 * All roles of user
 	 */
-	@ManyToMany
-	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	public Set<Role> roles;
+	@ManyToMany(targetEntity = Authority.class, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_authorities", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "authority_id") })
+	public List<Authority> authorities;
+
 }

@@ -12,6 +12,7 @@
     http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 	<context:component-scan base-package="by.intexsoft.course.service" />
+	    <context:component-scan base-package="by.intexsoft.course.security.config"/>
 	<context:property-placeholder location="classpath:database.properties" />
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"

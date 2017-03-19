@@ -39,6 +39,6 @@ module.exports = {
         extensions: [".js", ".ts", ".html"]
     },
     devServer: {
-        proxy: {'/travel/*': 'http://localhost:8080'}
+        proxy: {'/travel/**': 'http://localhost:8080'}
     }
 }
