@@ -24,7 +24,7 @@ public class Authority extends AbstractModel implements GrantedAuthority {
 	public String authority;
 
 	@Override
-	@JsonIgnore
+	//@JsonIgnore
 	public String getAuthority() {
 		return authority;
 	}

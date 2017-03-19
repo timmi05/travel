@@ -1,5 +1,7 @@
 package by.intexsoft.course.service.test;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,7 +23,7 @@ import by.intexsoft.course.service.TownService;
 public class HotelServiceTest {
 
 	@Autowired
-	private CountryService ñountryService;
+	private CountryService countryService;
 
 	@Autowired
 	private TownService townService;
@@ -39,7 +41,7 @@ public class HotelServiceTest {
 		for (int i = 0; i < testObjectsCount; i++) {
 			ñountry = new Country();
 			ñountry.name = ("name" + i);
-			ñountryService.save(ñountry);
+			countryService.save(ñountry);
 			town = new Town();
 			town.name = ("town" + i);
 			town.country = ñountry;
@@ -55,11 +57,27 @@ public class HotelServiceTest {
 	public void testOut() {
 		hotelService.deleteAll();
 		townService.deleteAll();
-		ñountryService.deleteAll();
+		countryService.deleteAll();
 	}
 
 	@Test
 	public void test() {
-		Assert.assertNotNull(ñountryService);
+		Assert.assertNotNull(countryService);
 	}
+
+	@Test
+	public void findByCountry() {
+		String someCountry = "name2";		
+		ñountry = countryService.findByName(someCountry);
+		List<Hotel> hotels = hotelService.findByTownCountry(ñountry);	
+		Assert.assertEquals(1, hotels.size());
+	}
+	
+//	@Test
+//	public void findCountryName() {
+//		String someCountry = "name2";		
+//		country = ñountryService.findByName(someCountry);
+//		List<Hotel> hotels = hotelService.findByTownCountry(country);		
+//		Assert.assertEquals(someCountry, hotels.get(0).town.country.name);
+//	}
 }

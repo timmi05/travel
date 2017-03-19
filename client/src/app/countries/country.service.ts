@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Http} from "@angular/http";
+import {Http, RequestOptions, Headers} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 import {Country} from '../model/country';
+import {LoginService} from "../authorization/login.service";
 
 @Injectable()
 export class CountryService{
@@ -11,7 +12,9 @@ private countriesUrl: string = '/travel/country';
     constructor(private http: Http) { }
 
     getCountries(): Promise<Country[]> {
-        return this.http.get(this.countriesUrl)
+        const headers = new Headers({'Content-Type': 'application/json', 'x-auth-token': LoginService.getCurrentUser().token});
+        const options = new RequestOptions({headers: headers});
+        return this.http.get(this.countriesUrl, options)
             .toPromise()
             .then(responce => responce.json())
             .catch(this.handleError);

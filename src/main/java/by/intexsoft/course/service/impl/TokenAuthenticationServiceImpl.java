@@ -20,8 +20,8 @@ import io.jsonwebtoken.Jwts;
 @Service
 public class TokenAuthenticationServiceImpl implements TokenAuthenticationService {
 
-	@Value("security.token.secret.key")
-	private String secretKey;
+//	@Value("security.token.secret.key")
+	private String secretKey = "creck";
 
 	private final static String AUTH_HEADER_NAME = "x-auth-token";
 

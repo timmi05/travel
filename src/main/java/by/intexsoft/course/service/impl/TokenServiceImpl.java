@@ -17,8 +17,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class TokenServiceImpl implements TokenService {
 
-	@Value("security.token.secret.key")
-	private String secretKey;
+//	@Value("security.token.secret.key")
+	private String secretKey = "creck";
 
 	@Override
 	public String generate(User user, String password) {

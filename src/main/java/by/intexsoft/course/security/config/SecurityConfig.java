@@ -26,7 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/").permitAll().antMatchers(HttpMethod.POST, "/country/")
+		http.authorizeRequests().antMatchers("/").permitAll().antMatchers(HttpMethod.GET, "/country")
+		.hasAuthority("ROLE_ADMIN").antMatchers(HttpMethod.POST, "/country/")
 				.hasAuthority("ROLE_ADMIN").antMatchers(HttpMethod.PUT, "/country/").hasAuthority("ROLE_ADMIN")
 				.antMatchers(HttpMethod.DELETE, "/country/**").hasAuthority("ROLE_ADMIN").and()
 				.addFilterBefore(new AuthenticationTokenFilter(tokenAuthenticationService),

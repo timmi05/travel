@@ -25,9 +25,3 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.springframework:spring-test:4.3.0.RELEASE'
 }
-
-war.dependsOn 'client:npm_run_build'
-
-war {
-    from "client/dist"
-}
