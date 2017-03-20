@@ -60,6 +60,9 @@ public interface TourService {
 	 */
 	@Transactional
 	Tour save(Tour tour);
+	
+	@Transactional
+	Tour update(Tour tour);
 
 	@Transactional
 	void deleteAll();

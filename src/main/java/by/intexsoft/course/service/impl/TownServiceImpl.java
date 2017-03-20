@@ -40,6 +40,11 @@ public class TownServiceImpl implements TownService {
 	}
 
 	@Override
+	public Town update(Town town) {
+		return townRepository.saveAndFlush(town);
+	}
+
+	@Override
 	public void deleteAll() {
 		townRepository.deleteAll();
 	}

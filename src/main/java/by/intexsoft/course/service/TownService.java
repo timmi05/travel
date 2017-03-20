@@ -32,6 +32,9 @@ public interface TownService {
 	 */
 	@Transactional
 	Town save(Town town);
+	
+	@Transactional
+	Town update(Town town);
 
 	@Transactional
 	void deleteAll();

@@ -40,5 +40,8 @@ public interface HotelService {
 	Hotel save(Hotel hotel);
 
 	@Transactional
+	Hotel update(Hotel hotel);
+
+	@Transactional
 	void deleteAll();
 }

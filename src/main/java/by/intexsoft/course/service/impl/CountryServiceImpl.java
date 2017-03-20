@@ -34,6 +34,11 @@ public class CountryServiceImpl implements CountryService {
 	}
 
 	@Override
+	public Country update(Country country) {
+		return ñountryRepository.saveAndFlush(country);
+	}
+
+	@Override
 	public void deleteAll() {
 		ñountryRepository.deleteAll();
 	}

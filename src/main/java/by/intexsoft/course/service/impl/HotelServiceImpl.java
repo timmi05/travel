@@ -46,6 +46,11 @@ public class HotelServiceImpl implements HotelService {
 	}
 
 	@Override
+	public Hotel update(Hotel hotel) {
+		return hotelRepository.saveAndFlush(hotel);
+	}
+
+	@Override
 	public void deleteAll() {
 		hotelRepository.deleteAll();
 	}

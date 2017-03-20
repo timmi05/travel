@@ -27,6 +27,12 @@ public interface CountryService {
 	@Transactional
 	Country save(Country country);
 	
+	/**
+	 * Save new {@link Country}
+	 */
+	@Transactional
+	Country update(Country country);
+	
 	@Transactional
 	void deleteAll();
 }

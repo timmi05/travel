@@ -27,10 +27,10 @@ public class TourServiceImpl implements TourService {
 		return tourRepository.findAll();
 	}
 
-//	@Override
-//	public Tour findByName(String name) {
-//		return tourRepository.findByName(name);
-//	}
+	// @Override
+	// public Tour findByName(String name) {
+	// return tourRepository.findByName(name);
+	// }
 
 	@Override
 	public List<Tour> findByUser(User user) {
@@ -64,6 +64,11 @@ public class TourServiceImpl implements TourService {
 
 	@Override
 	public Tour save(Tour tour) {
+		return tourRepository.saveAndFlush(tour);
+	}
+
+	@Override
+	public Tour update(Tour tour) {
 		return tourRepository.saveAndFlush(tour);
 	}
 
