@@ -32,7 +32,7 @@ public class TourController {
 	/**
 	 * Return all {@link Tour#name} in line
 	 */
-	@RequestMapping(value = "/tours")
+	@RequestMapping(value = "/tour")
 	public List<Tour> findAllTours() {
 		return tourService.findAll();
 	}
@@ -74,6 +74,17 @@ public class TourController {
 
 	@RequestMapping(value = "/tour", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateTour(@RequestBody Tour tour) {
+		LOGGER.info("start updateTour");
+		try {
+			return new ResponseEntity<>(tourService.update(tour), HttpStatus.OK);
+		} catch (Exception e) {
+			LOGGER.info("Error in updateTour. " + e.getLocalizedMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value = "/tourbymanager", method = RequestMethod.POST)
+	public ResponseEntity<?> updateTourByManager(@RequestBody Tour tour) {
 		LOGGER.info("start updateTour");
 		try {
 			return new ResponseEntity<>(tourService.update(tour), HttpStatus.OK);

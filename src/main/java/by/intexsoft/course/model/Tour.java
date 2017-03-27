@@ -18,21 +18,27 @@ public class Tour extends AbstractModel {
 	private static final long serialVersionUID = -782215207665987375L;
 
 	/**
+	 * Description of nights of tour
+	 */
+	@Column
+	public String description;
+
+	/**
 	 * {@link Hotel} for the tour
 	 */
-	@ManyToOne(targetEntity = Hotel.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER)
 	public Hotel hotel;
 
 	/**
 	 * {@link Town} for the tour
 	 */
-	@ManyToOne(targetEntity = Town.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Town.class, fetch = FetchType.EAGER)
 	public Town town;
 
 	/**
 	 * {@link Country} for the tour
 	 */
-	@ManyToOne(targetEntity = Country.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Country.class, fetch = FetchType.EAGER)
 	public Country country;
 
 	/**
@@ -74,7 +80,7 @@ public class Tour extends AbstractModel {
 	/**
 	 * Tour for {@link User}
 	 */
-	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	public User user;
 
 	/**

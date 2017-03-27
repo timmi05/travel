@@ -30,6 +30,6 @@ public class Hotel extends AbstractModel {
 	/**
 	 * {@link Town} in which the hotel is located
 	 */
-	@ManyToOne(targetEntity = Town.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Town.class, fetch = FetchType.EAGER)
 	public Town town;
 }

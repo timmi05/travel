@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
 import {Http, RequestOptions, Headers, Response} from "@angular/http";
 import {Country} from '../model/country';
-import {Observable} from "rxjs";
 import {LoginService} from "../authorization/login.service";
+import {Observable} from "rxjs";
 
 @Injectable()
-export class CountryService{
+export class CountryService {
 
-private countriesUrl: string = '/travel/country';
+    private countriesUrl: string = '/travel/country';
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+    }
 
     getCountries() {
         return this.http.get(this.countriesUrl)
@@ -17,22 +18,24 @@ private countriesUrl: string = '/travel/country';
             .catch(CountryService.handleError);
     }
 
-    addcountry(country: Country){
+    newCountry(country: Country) {
         const body = country;
-        const headers = new Headers({'Content-Type': 'application/json', 'x-auth-token': LoginService.getCurrentUser().token});
-        const options = new RequestOptions({headers: headers});
-        return this.http.post(this.countriesUrl, body, options).map(() => {
-            return true;
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'x-auth-token': LoginService.getCurrentUser().token
         });
+        const options = new RequestOptions({headers: headers});
+        return this.http.post(this.countriesUrl, body, options).map((response: Response) => response.status === 201);
     }
 
-    updatecountry(country: Country){
+    updateCountry(country: Country) {
         const body = country;
-        const headers = new Headers({'Content-Type': 'application/json', 'x-auth-token': LoginService.getCurrentUser().token});
-        const options = new RequestOptions({headers: headers});
-        return this.http.put(this.countriesUrl, body, options).map(() => {
-            return true;
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'x-auth-token': LoginService.getCurrentUser().token
         });
+        const options = new RequestOptions({headers: headers});
+        return this.http.put(this.countriesUrl, body, options).map((response: Response) => response.status === 200);
     }
 
     private static handleError(error: any) {

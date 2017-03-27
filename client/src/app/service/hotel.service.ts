@@ -1,38 +1,34 @@
 import {Injectable} from '@angular/core';
 import {Http, RequestOptions, Headers, Response} from "@angular/http";
 import {Observable} from "rxjs";
-import {Town} from '../model/town';
+import {Hotel} from "../model/hotel";
 import {LoginService} from "../authorization/login.service";
 
 @Injectable()
-export class TownService{
+export class HotelService{
 
-private townsUrl: string = 'travel/town';
+private hotelUrl: string = 'travel/hotel';
 
     constructor(private http: Http) { }
 
-    getTowns() {
-        return this.http.get(this.townsUrl)
+    getHotels() {
+        return this.http.get(this.hotelUrl)
             .map((response: Response) => response.json())
-            .catch(TownService.handleError);
+            .catch(HotelService.handleError);
     }
 
-    addtown(town: Town){
-        const body = town;
+    newHotel(hotel: Hotel){
+        const body = hotel;
         const headers = new Headers({'Content-Type': 'application/json', 'x-auth-token': LoginService.getCurrentUser().token});
         const options = new RequestOptions({headers: headers});
-        return this.http.post(this.townsUrl, body, options).map(() => {
-            return true;
-        });
+        return this.http.post(this.hotelUrl, body, options).map((response: Response) => response.status === 201);
     }
 
-    updatetown(town: Town){
-        const body = town;
+    updateHotel(hotel: Hotel){
+        const body = hotel;
         const headers = new Headers({'Content-Type': 'application/json', 'x-auth-token': LoginService.getCurrentUser().token});
         const options = new RequestOptions({headers: headers});
-        return this.http.put(this.townsUrl, body, options).map(() => {
-            return true;
-        });
+        return this.http.put(this.hotelUrl, body, options).map((response: Response) => response.status === 200);
     }
 
     private static handleError(error: any) {
@@ -48,4 +44,7 @@ private townsUrl: string = 'travel/town';
         console.error(errMsg);
         return Observable.throw(errMsg);
     }
+
+
+
 }

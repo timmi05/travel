@@ -30,7 +30,7 @@ public class UserController {
 	/**
 	 * Return all {@link User} in line
 	 */
-	@RequestMapping(value = "/users")
+	@RequestMapping(value = "/user")
 	public List<User> findAll() {
 		return userService.findAll();
 	}

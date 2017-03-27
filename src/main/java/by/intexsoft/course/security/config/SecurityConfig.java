@@ -26,10 +26,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/").permitAll().antMatchers(HttpMethod.GET, "/country")
-		.hasAuthority("ROLE_ADMIN").antMatchers(HttpMethod.POST, "/country/")
-				.hasAuthority("ROLE_ADMIN").antMatchers(HttpMethod.PUT, "/country/").hasAuthority("ROLE_ADMIN")
-				.antMatchers(HttpMethod.DELETE, "/country/**").hasAuthority("ROLE_ADMIN").and()
+		http.authorizeRequests().antMatchers("/").permitAll().antMatchers(HttpMethod.POST, "/country")
+				.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER").antMatchers(HttpMethod.PUT, "/country")
+				.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER").antMatchers(HttpMethod.POST, "/town")
+				.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER").antMatchers(HttpMethod.PUT, "/town")
+				.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER").antMatchers(HttpMethod.POST, "/hotel")
+				.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER").antMatchers(HttpMethod.PUT, "/hotel")
+				.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER").antMatchers(HttpMethod.POST, "/tour")
+				.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER").antMatchers(HttpMethod.PUT, "/tour")
+				.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_USER")
+				.antMatchers(HttpMethod.POST, "/tourbymanager").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER")
+				.antMatchers(HttpMethod.PUT, "/user").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_USER").and()
 				.addFilterBefore(new AuthenticationTokenFilter(tokenAuthenticationService),
 						UsernamePasswordAuthenticationFilter.class)
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().csrf().disable();

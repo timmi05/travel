@@ -24,7 +24,7 @@ public class Town extends AbstractModel {
 	/**
 	 * {@link Country} in which the town is located
 	 */
-	@ManyToOne(targetEntity = Country.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Country.class, fetch = FetchType.EAGER)
 	public Country country;
 
 }

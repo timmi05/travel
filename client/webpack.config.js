@@ -36,8 +36,10 @@ module.exports = {
         new webpack.NoEmitOnErrorsPlugin()
     ],
     resolve: {
-        extensions: [".js", ".ts", ".html"]
+        extensions: [".js", ".ts", '.css', ".html"]
     },
+    devtool: 'source-map',
+
     devServer: {
         proxy: {'/travel/**': 'http://localhost:8080'}
     }

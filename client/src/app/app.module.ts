@@ -3,22 +3,28 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule}   from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {AppRoutingModule}  from './app-routing.module';
-
 import {AppComponent}   from './app.component';
 import {CountryComponent}   from './countries/country.component';
-import {CountryService} from './countries/country.service';
-import {LocalCountryComponent} from "./countries/loc-country.component";
+import {CountryService} from './service/country.service';
 import {LoginComponent} from "./authorization/login.component";
 import {HomeComponent} from "./home/home.component";
 import {LoginService} from "./authorization/login.service";
-import {CommonModule} from "@angular/common";
+import {CommonModule, LocationStrategy, HashLocationStrategy} from "@angular/common";
 import {RouterModule} from "@angular/router";
 import {AuthorizationGuard} from "./guard/authorization.guard";
+import {TownService} from "./service/town.service";
+import {HotelService} from "./service/hotel.service";
+import {TourService} from "./service/tour.service";
+import {UserService} from "./service/user.service";
+import { MyDatePickerModule } from 'mydatepicker';
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule, CommonModule, ReactiveFormsModule, RouterModule],
-    declarations: [AppComponent, CountryComponent, LocalCountryComponent, LoginComponent, HomeComponent],
-    providers: [CountryService, LoginService, AuthorizationGuard],
+    imports: [MyDatePickerModule, BrowserModule, FormsModule, HttpModule, AppRoutingModule, CommonModule, ReactiveFormsModule, RouterModule],
+    declarations: [AppComponent, CountryComponent, LoginComponent, HomeComponent],
+    providers: [{
+        provide: LocationStrategy,
+        useClass: HashLocationStrategy
+    }, CountryService, LoginService, AuthorizationGuard, TownService, HotelService, TourService, UserService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

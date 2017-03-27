@@ -31,7 +31,7 @@ public class HotelController {
 	/**
 	 * Return all {@link Hotel#name} in line
 	 */
-	@RequestMapping(value = "/hotels")
+	@RequestMapping(value = "/hotel")
 	public List<Hotel> findAllHotels() {
 		return hotelService.findAll();
 	}

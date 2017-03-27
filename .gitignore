@@ -15,3 +15,4 @@ client/.idea/
 client/node_modules/
 client/dist/
 CATALINA_HOME_IS_UNDEFINED/logs/spring-rest-hibernate-jpa-2017-03-19.log.0
+CATALINA_HOME_IS_UNDEFINED/

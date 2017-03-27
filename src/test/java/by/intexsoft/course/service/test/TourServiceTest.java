@@ -48,8 +48,8 @@ public class TourServiceTest {
 
 	@Before
 	public void testIn() {
-		int testObjectsCount = 5;
-		for (int i = 0; i < testObjectsCount; i++) {
+		int testObjectsCount = 24;
+		for (int i = 23; i < testObjectsCount; i++) {
 			ñountry = new Country();
 			ñountry.name = ("name" + i);
 			ñountryService.save(ñountry);

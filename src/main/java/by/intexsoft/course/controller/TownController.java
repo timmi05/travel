@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import by.intexsoft.course.model.Country;
 import by.intexsoft.course.model.Town;
+import by.intexsoft.course.service.CountryService;
 import by.intexsoft.course.service.TownService;
 
 /**
@@ -27,10 +28,13 @@ public class TownController {
 	@Autowired
 	private TownService townService;
 
+	@Autowired
+	private CountryService countryService;
+
 	/**
 	 * Return all {@link Town#name} in line
 	 */
-	@RequestMapping(value = "/towns")
+	@RequestMapping(value = "/town")
 	public List<Town> findAll() {
 		return townService.findAll();
 	}
