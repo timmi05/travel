@@ -8,6 +8,7 @@ import {LoginService} from "../authorization/login.service";
 export class TourService {
 
     private tourUrl: string = 'travel/tour';
+    private toursUrl: string = 'travel/tours';
 
     constructor(private http: Http) {
     }
@@ -20,9 +21,8 @@ export class TourService {
 
     findTours(tour: Tour) {
         const body = tour;
-        return this.http.get(this.tourUrl, body)
-            .map((response: Response) => response.json())
-            .catch(TourService.handleError);
+        return this.http.post(this.toursUrl, body)
+            .map((response: Response) => response.json());
     }
 
     newTour(tour: Tour) {
@@ -32,9 +32,7 @@ export class TourService {
             'x-auth-token': LoginService.getCurrentUser().token
         });
         const options = new RequestOptions({headers: headers});
-        return this.http.post(this.tourUrl, body, options).map(() => {
-            return true;
-        });
+        return this.http.put(this.tourUrl, body, options).map((response: Response) => response.status === 201);
     }
 
     updateTour(tour: Tour) {
@@ -43,7 +41,7 @@ export class TourService {
             'Content-Type': 'application/json', 'x-auth-token': LoginService.getCurrentUser().token
         });
         const options = new RequestOptions({headers: headers});
-        return this.http.put(this.tourUrl, body, options).map(() => {
+        return this.http.post(this.toursUrl, body, options).map(() => {
             return true;
         });
     }
@@ -54,7 +52,7 @@ export class TourService {
             'Content-Type': 'application/json', 'x-auth-token': LoginService.getCurrentUser().token
         });
         const options = new RequestOptions({headers: headers});
-        return this.http.post(this.tourUrl + 'bymanager', body, options).map(() => {
+        return this.http.put(this.toursUrl + 'bymanager', body, options).map(() => {
             return true;
         });
     }

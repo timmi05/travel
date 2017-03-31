@@ -23,8 +23,8 @@ public class CountryServiceTest {
 
 	@Before
 	public void testIn() {
-		int testObjectsCount = 6;
-		for (int i = 0; i < testObjectsCount; i++) {
+		int testObjectsCount = 12;
+		for (int i = 10; i < testObjectsCount; i++) {
 			ñountry = new Country();
 			ñountry.name = ("name" + i);
 			ñountryService.save(ñountry);

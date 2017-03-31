@@ -19,6 +19,11 @@ public interface TourService {
 	 * Find all {@link User}
 	 */
 	List<Tour> findAll();
+	
+	/**
+	 * Find all {@link User}
+	 */
+	List<Tour> findTours(Tour tour);
 
 //	/**
 //	 * Find {@link Tour}

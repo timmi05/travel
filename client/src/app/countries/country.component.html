@@ -1,3 +1,14 @@
+<form [formGroup]="chooseDateForm" novalidate>
+    <div>
+        <my-date-picker name="choosestartdate" [options]="myDatePickerOptions"
+                    formControlName="chooseStartDate"></my-date-picker>
+    </div>
+    <div>
+        <my-date-picker name="chooseуndвate" [options]="myDatePickerOptions"
+                    formControlName="chooseEndDate"></my-date-picker>
+    </div>
+</form>
+
 <div class="add-tour-content">
 <select [(ngModel)]="selectedCountry" (change)="onChangeCountry($event)">
     <option *ngFor="let country of countries"
@@ -109,12 +120,11 @@
         <div class="modal-dialog">
             <div class="modal-body">
                 <form name="form" novalidate [formGroup]="tourForm" (ngSubmit)="onSubmitTour()">
-                    <div class="myDatePicker-only">
-                        <form [formGroup]="myForm" novalidate>
-                            <my-date-picker name="mydate" [options]="myDatePickerOptions"
-                                            [placeholder]="placeholder" formControlName="myDate" required></my-date-picker>
-                        </form>
-                    </div>
+
+                    <my-date-picker name="startDate" [options]="myDatePickerOptions"
+                                    [placeholder]="placeholder" formControlName="startDate" required  ></my-date-picker>
+
+
                     <input name="price" placeholder="Цена" class="textbox"
                            formControlName="price" required/>
                     <input name="nights" placeholder="Количество ночей" class="textbox"
@@ -139,8 +149,36 @@
 <div>
     <form name="form-tour" (ngSubmit)="onSubmitFindTour()">
         <input name="submit"
-               [disabled]="selectedHotel === null || loading" class="btn btn-form" type="submit"
+               class="btn btn-form" type="submit"
                value="Найти"/>
     </form>
 </div>
+</div>
+
+<div *ngIf="tours" class="panel">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Дата заезад</th>
+            <th>Ночей</th>
+            <th>Отель</th>
+            <th>Город</th>
+            <th>Размер</th>
+            <th>Цена</th>
+            <th>Страна</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr *ngFor="let tour of tours">
+            <td>{{tour.startDate}}</td>
+            <td>{{tour.nights}}</td>
+            <td>{{tour.hotel.name}}</td>
+            <td>{{tour.town.name}}</td>
+            <td>{{tour.persons}}</td>
+            <td>{{tour.price}}</td>
+            <td>{{tour.country.name}}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>

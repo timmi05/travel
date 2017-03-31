@@ -3,7 +3,7 @@ import {Country} from '../model/country';
 import {CountryService} from '../service/country.service';
 import {TownService} from "../service/town.service";
 import {Town} from "../model/town";
-import {FormControl, FormGroup, Validators, FormBuilder} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HotelService} from "../service/hotel.service";
 import {Hotel} from "../model/hotel";
 import {Tour} from "../model/tour";
@@ -30,19 +30,19 @@ export class CountryComponent implements OnInit {
     townForm: FormGroup;
     hotelForm: FormGroup;
     tourForm: FormGroup;
+    chooseDateForm: FormGroup;
     loading: Boolean = false;
     placeholder: String = 'Дата  заезда';
+    startDate: Date;
+    chooseStartDate: Date;
+    chooseEndDate: Date;
+
+    // myForm: FormGroup;
 
     constructor(private countryService: CountryService, private townService: TownService,
-                private hotelService: HotelService, private tourService: TourService, private formBuilder: FormBuilder) {
-        this.myForm = this.formBuilder.group({
-            // Empty string means no initial value. Can be also specific date for
-            // example: {date: {year: 2018, month: 10, day: 9}} which sets this date to initial
-            // value.
+                private hotelService: HotelService, private tourService: TourService) {
+        // , private formBuilder: FormBuilder) {
 
-            myDate: ['', Validators.required]
-            // other controls are here...
-        });
     }
 
     myDatePickerOptions: IMyOptions = {
@@ -51,29 +51,52 @@ export class CountryComponent implements OnInit {
         width: '150px',
         selectionTxtFontSize: '12px',
         dateFormat: 'dd.mm.yyyy',
+        todayBtnTxt: 'Сегодня',
+        dayLabels: {su: 'Вс', mo: 'Пн', tu: 'Вт', we: 'Ср', th: 'Чт', fr: 'Пт', sa: 'Сб'},
+        monthLabels: {
+            1: 'Янв',
+            2: 'Фев',
+            3: 'Март',
+            4: 'Апр',
+            5: 'Май',
+            6: 'Ин',
+            7: 'Ил',
+            8: 'Авг',
+            9: 'Сен',
+            10: 'Окт',
+            11: 'Нояб',
+            12: 'Дек'
+        },
     };
 
-    private myForm: FormGroup;
-
-    setDate(): void {
-        // Set today date using the setValue function
-        let date = new Date();
-        this.myForm.setValue({myDate: {
-            date: {
-                year: date.getFullYear(),
-                month: date.getMonth() + 1,
-                day: date.getDate()}
-        }});
-    }
+    // setDate(): void {
+    //     // Set today date using the setValue function
+    //     let date = new Date();
+    //     this.myForm.setValue({myDate: {
+    //         date: {
+    //             year: date.getFullYear(),
+    //             month: date.getMonth() + 1,
+    //             day: date.getDate()}
+    //     }});
+    // }
 
     ngOnInit(): void {
         this.loadAllCountries();
-        this.tourForm = new FormGroup({
-            price: new FormControl('', Validators.required),
-            nights: new FormControl('', Validators.required),
-            persons: new FormControl('', Validators.required),
-            startDate: new FormControl('', Validators.required),
+        this.removeTourForm();
+
+        this.chooseDateForm = new FormGroup({
+            chooseStartDate: new FormControl('', Validators.required),
+            chooseEndDate: new FormControl('', Validators.required)
         });
+
+        // this.myForm = this.formBuilder.group({
+        //     // Empty string means no initial value. Can be also specific date for
+        //     // example: {date: {year: 2018, month: 10, day: 9}} which sets this date to initial
+        //     // value.
+        //
+        //     startDate: ['', Validators.required]
+        //     // other controls are here...
+        // });
     }
 
     private loadAllCountries() {
@@ -145,7 +168,7 @@ export class CountryComponent implements OnInit {
         const town: Town = new Town(this.townForm.value.townName, this.selectedCountry);
         this.townService.newTown(town)
             .subscribe(() => this.loadAllTowns(),
-                error => this.errorTownMsg(error));
+                error => this.errorTownMsg(error), () => this.onChangeCountry(event));
     }
 
     onSubmitHotel() {
@@ -153,15 +176,27 @@ export class CountryComponent implements OnInit {
         const hotel: Hotel = new Hotel(this.hotelForm.value.hotelName, this.hotelForm.value.address, this.selectedTown);
         this.hotelService.newHotel(hotel)
             .subscribe(() => this.loadAllHotels(),
-                error => this.errorHotelMsg(error),() =>  this.onChangeTown());
+                error => this.errorHotelMsg(error), () => this.onChangeTown());
     }
 
     onSubmitTour() {
         this.loading = true;
-        const tour: Tour = new Tour(this.selectedHotel, this.selectedTown, this.selectedCountry);
+        const tour: Tour = new Tour();
+        tour.hotel = this.selectedHotel;
+        tour.town = this.selectedTown;
+        tour.country = this.selectedCountry;
+        tour.startDate =  this.tourForm.value.startDate.jsdate;
+        tour.price = this.tourForm.value.price;
+        tour.nights = this.tourForm.value.nights;
+        tour.persons = this.tourForm.value.persons;
         this.tourService.newTour(tour)
-            .subscribe(() => this.Successfull(),
-                error => this.errorHotelMsg(error));
+            .subscribe(() => this.successfull('Тур'),
+                error => this.errorHotelMsg(error), () => this.removeTourForm());
+
+    }
+
+    private removeTourForm() {
+        this.loading = false;
         this.tourForm = new FormGroup({
             price: new FormControl('', Validators.required),
             nights: new FormControl('', Validators.required),
@@ -172,9 +207,19 @@ export class CountryComponent implements OnInit {
 
     onSubmitFindTour() {
         this.loading = true;
-        const tour: Tour = new Tour(this.selectedHotel, this.selectedTown, this.selectedCountry);
+        this.tours = [];
+        const tour: Tour = new Tour();
+        tour.hotel = this.selectedHotel;
+        tour.town = this.selectedTown;
+        tour.country = this.selectedCountry;
+        tour.startDate = this.chooseDateForm.value.chooseStartDate.jsdate;
+        tour.endDate = this.chooseDateForm.value.chooseEndDate.jsdate;
         this.tourService.findTours(tour)
-            .subscribe(toursFromService => this.tours = toursFromService);
+            .subscribe(toursFromService => this.tours = toursFromService, () => this.afterFindTour());
+    }
+
+    private afterFindTour(){
+        this.loading = false;
     }
 
     private errorCountryMsg(error): void {
@@ -189,9 +234,13 @@ export class CountryComponent implements OnInit {
         alert("Error while creating new town!");
     }
 
-    private Successfull(): void {
+    private successfull(entity: String): void {
         this.loading = false;
-        alert("Тур успешно добавлен");
+        var a: String = '';
+        if (entity === 'Страна') {
+            a = 'а'
+        }
+        alert(entity + " успешно добавлен " + a);
     }
 
     private errorHotelMsg(error): void {

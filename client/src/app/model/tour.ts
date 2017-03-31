@@ -20,12 +20,4 @@ export class Tour {
     paid: boolean;
     archive: boolean;
     description: string;
-
-    constructor(hotel: Hotel, town: Town, country: Country) {
-        this.hotel = hotel;
-        this.town = town;
-        this.country = country
-    }
-
-
 }

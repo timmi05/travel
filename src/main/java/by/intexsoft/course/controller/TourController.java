@@ -36,6 +36,12 @@ public class TourController {
 	public List<Tour> findAllTours() {
 		return tourService.findAll();
 	}
+	
+	@RequestMapping(value = "/tours", method = RequestMethod.POST)
+	public List<Tour> findTours(@RequestBody Tour tour) {
+		LOGGER.info("Start load tours");
+		return tourService.findTours(tour);
+	}	
 
 	/**
 	 * Return all {@link Tour#name} in line
@@ -57,11 +63,11 @@ public class TourController {
 	 * Return all {@link Tour#name} in line
 	 */
 	@RequestMapping(value = "/toursincountry")
-	public List<Tour> findAByCountry(@RequestBody Country country) {
+	public List<Tour> findByCountry(@RequestBody Country country) {
 		return tourService.findByCountry(country);
 	}
 
-	@RequestMapping(value = "/tour", method = RequestMethod.POST)
+	@RequestMapping(value = "/tour", method = RequestMethod.PUT)
 	public ResponseEntity<?> addTour(@RequestBody Tour tour) {
 		LOGGER.info("Start addTour");
 		try {
@@ -72,7 +78,7 @@ public class TourController {
 		}
 	}
 
-	@RequestMapping(value = "/tour", method = RequestMethod.PUT)
+	@RequestMapping(value = "/tours", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateTour(@RequestBody Tour tour) {
 		LOGGER.info("start updateTour");
 		try {

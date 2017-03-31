@@ -28,7 +28,7 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
 
 	List<Tour> findByBookingIsNullAndArchiveFalseAndTown(Town town);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndHotTrue();
+	List<Tour> findByBookingIsNullAndArchiveFalse();
 
 	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTownCountryAndStartDateAfter(Country country, Date startDate);
 
@@ -68,6 +68,9 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
 
 	List<Tour> findByBookingIsNullAndArchiveFalseAndTownAndStartDateAfterAndEndDateBefore(Town town, Date startDate,
 			Date endDate);
+	
+	List<Tour> findByBookingIsNullAndArchiveFalseAndStartDateAfterAndEndDateBefore(Date startDate,
+			Date endDate);
 
 	List<Tour> findByBookingIsNullAndArchiveFalseAndHotTrueAndStartDateAfterAndEndDateBefore(Date startDate,
 			Date endDate);
@@ -76,7 +79,9 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
 
 	List<Tour> findByHotTrueAndBookingIsNullAndArchiveFalseAndTown(Town town);
 
-	List<Tour> findByHotTrueAndBookingIsNullAndArchiveFalseAndHotel(Hotel hotel);
+	List<Tour> findByHotTrueAndBookingIsNullAndArchiveFalseAndHotel(Hotel hotel);	
+
+	List<Tour> findByBookingIsNullAndArchiveFalseAndHotTrue();
 
 	// List<Tour> findByHotTrueAndCounry();
 	//
