@@ -171,7 +171,7 @@
         <tbody>
 
         <tr *ngFor="let tour of tours">
-            <td>{{tour.startDate}}</td>
+            <td>{{tour.startDate | date: 'dd.MM.yyyy'}}</td>
             <td>{{tour.nights}}</td>
             <td>{{tour.hotel.name}}</td>
             <td>{{tour.town.name}}</td>

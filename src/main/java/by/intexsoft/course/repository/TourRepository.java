@@ -3,6 +3,7 @@ package by.intexsoft.course.repository;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import by.intexsoft.course.model.Country;
@@ -18,70 +19,73 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
 
 	List<Tour> findByUser(User user);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTownCountry(Country country);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTownCountry(Country country, Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTown(Town town);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTown(Town town, Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndHotel(Hotel hotel);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndHotel(Hotel hotel, Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndCountry(Country country);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndCountry(Country country, Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndTown(Town town);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndTown(Town town, Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalse();
+	List<Tour> findByBookingIsNullAndArchiveFalse(Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTownCountryAndStartDateAfter(Country country, Date startDate);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTownCountryAndStartDateAfter(Country country, Date startDate,
+			Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTownAndStartDateAfter(Town town, Date startDate);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTownAndStartDateAfter(Town town, Date startDate, Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelAndStartDateAfter(Hotel hotel, Date startDate);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelAndStartDateAfter(Hotel hotel, Date startDate, Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndCountryAndStartDateAfter(Country country, Date startDate);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndCountryAndStartDateAfter(Country country, Date startDate,
+			Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndTownAndStartDateAfter(Town town, Date startDate);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndTownAndStartDateAfter(Town town, Date startDate, Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndHotTrueAndStartDateAfter(Date startDate);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndHotTrueAndStartDateAfter(Date startDate, Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTownCountryAndEndDateBefore(Country country, Date endDate);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTownCountryAndEndDateBefore(Country country, Date endDate,
+			Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTownAndEndDateBefore(Town town, Date endDate);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTownAndEndDateBefore(Town town, Date endDate, Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelAndEndDateBefore(Hotel hotel, Date endDate);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelAndEndDateBefore(Hotel hotel, Date endDate, Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndCountryAndEndDateBefore(Country country, Date endDate);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndCountryAndEndDateBefore(Country country, Date endDate, Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndTownAndEndDateBefore(Town town, Date endDate);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndTownAndEndDateBefore(Town town, Date endDate, Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndHotTrueAndEndDateBefore(Date endDate);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndHotTrueAndEndDateBefore(Date endDate, Sort sort);
 
 	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTownCountryAndStartDateAfterAndEndDateBefore(Country country,
-			Date startDate, Date endDate);
+			Date startDate, Date endDate, Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTownAndStartDateAfterAndEndDateBefore(Town town, Date startDate,
-			Date endDate);
+	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelTownAndStartDateAfterAndEndDateBefore(Town town,
+			Date startDate, Date endDate, Sort sort);
 
 	List<Tour> findByBookingIsNullAndArchiveFalseAndHotelAndStartDateAfterAndEndDateBefore(Hotel hotel, Date startDate,
-			Date endDate);
+			Date endDate, Sort sort);
 
 	List<Tour> findByBookingIsNullAndArchiveFalseAndCountryAndStartDateAfterAndEndDateBefore(Country country,
-			Date startDate, Date endDate);
+			Date startDate, Date endDate, Sort sort);
 
 	List<Tour> findByBookingIsNullAndArchiveFalseAndTownAndStartDateAfterAndEndDateBefore(Town town, Date startDate,
-			Date endDate);
-	
-	List<Tour> findByBookingIsNullAndArchiveFalseAndStartDateAfterAndEndDateBefore(Date startDate,
-			Date endDate);
+			Date endDate, Sort sort);
+
+	List<Tour> findByBookingIsNullAndArchiveFalseAndStartDateAfterAndEndDateBefore(Date startDate, Date endDate,
+			Sort sort);
 
 	List<Tour> findByBookingIsNullAndArchiveFalseAndHotTrueAndStartDateAfterAndEndDateBefore(Date startDate,
-			Date endDate);
+			Date endDate, Sort sort);
 
-	List<Tour> findByHotTrueAndBookingIsNullAndArchiveFalseAndCountry(Country country);
+	List<Tour> findByHotTrueAndBookingIsNullAndArchiveFalseAndCountry(Country country, Sort sort);
 
-	List<Tour> findByHotTrueAndBookingIsNullAndArchiveFalseAndTown(Town town);
+	List<Tour> findByHotTrueAndBookingIsNullAndArchiveFalseAndTown(Town town, Sort sort);
 
-	List<Tour> findByHotTrueAndBookingIsNullAndArchiveFalseAndHotel(Hotel hotel);	
+	List<Tour> findByHotTrueAndBookingIsNullAndArchiveFalseAndHotel(Hotel hotel, Sort sort);
 
-	List<Tour> findByBookingIsNullAndArchiveFalseAndHotTrue();
+	List<Tour> findByBookingIsNullAndArchiveFalseAndHotTrue(Sort sort);
 
 	// List<Tour> findByHotTrueAndCounry();
 	//

@@ -185,7 +185,7 @@ export class CountryComponent implements OnInit {
         tour.hotel = this.selectedHotel;
         tour.town = this.selectedTown;
         tour.country = this.selectedCountry;
-        tour.startDate =  this.tourForm.value.startDate.jsdate;
+        tour.startDate = this.tourForm.value.startDate.jsdate;
         tour.price = this.tourForm.value.price;
         tour.nights = this.tourForm.value.nights;
         tour.persons = this.tourForm.value.persons;
@@ -215,10 +215,11 @@ export class CountryComponent implements OnInit {
         tour.startDate = this.chooseDateForm.value.chooseStartDate.jsdate;
         tour.endDate = this.chooseDateForm.value.chooseEndDate.jsdate;
         this.tourService.findTours(tour)
-            .subscribe(toursFromService => this.tours = toursFromService, () => this.afterFindTour());
+            .subscribe(toursFromService => this.tours = toursFromService, error => this.errorFindTou(error),
+                () => this.afterFindTour());
     }
 
-    private afterFindTour(){
+    private afterFindTour() {
         this.loading = false;
     }
 
@@ -247,5 +248,11 @@ export class CountryComponent implements OnInit {
         console.log(error);
         this.loading = false;
         alert("Error while creating new hotel!");
+    }
+
+    private errorFindTou(error): void {
+        console.log(error);
+        this.loading = false;
+        alert("Ошибка при загрузке информации, попробуйте выбрать другие условия для поиска!");
     }
 }
