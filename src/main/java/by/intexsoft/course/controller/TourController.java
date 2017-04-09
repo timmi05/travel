@@ -16,6 +16,7 @@ import by.intexsoft.course.model.Country;
 import by.intexsoft.course.model.Hotel;
 import by.intexsoft.course.model.Tour;
 import by.intexsoft.course.model.Town;
+import by.intexsoft.course.model.User;
 import by.intexsoft.course.service.TourService;
 
 /**
@@ -42,6 +43,12 @@ public class TourController {
 		LOGGER.info("Start load tours");
 		return tourService.findTours(tour);
 	}	
+	
+	@RequestMapping(value = "/managertours", method = RequestMethod.POST)
+	public List<Tour> findToursForManager(@RequestBody Tour tour) {
+		LOGGER.info("Start load tours");
+		return tourService.findToursForManager(tour);
+	}	
 
 	/**
 	 * Return all {@link Tour#name} in line
@@ -66,6 +73,17 @@ public class TourController {
 	public List<Tour> findByCountry(@RequestBody Country country) {
 		return tourService.findByCountry(country);
 	}
+	
+	@RequestMapping(value = "/mytour", method = RequestMethod.POST)
+	public ResponseEntity<?> getUserTours(@RequestBody User user) {
+		LOGGER.info("Start getUserTours");
+		try {
+			return new ResponseEntity<>(tourService.findByUser(user), HttpStatus.OK);
+		} catch (Exception e) {
+			LOGGER.info("Error in getUserTours. " + e.getLocalizedMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 
 	@RequestMapping(value = "/tour", method = RequestMethod.PUT)
 	public ResponseEntity<?> addTour(@RequestBody Tour tour) {
@@ -78,18 +96,29 @@ public class TourController {
 		}
 	}
 
-	@RequestMapping(value = "/tours", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateTour(@RequestBody Tour tour) {
+	@RequestMapping(value = "/booking", method = RequestMethod.POST)
+	public ResponseEntity<?> bookingTour(@RequestBody Tour tour) {
 		LOGGER.info("start updateTour");
 		try {
-			return new ResponseEntity<>(tourService.update(tour), HttpStatus.OK);
+			return new ResponseEntity<>(tourService.booking(tour), HttpStatus.OK);
 		} catch (Exception e) {
 			LOGGER.info("Error in updateTour. " + e.getLocalizedMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-	@RequestMapping(value = "/tourbymanager", method = RequestMethod.POST)
+	@RequestMapping(value = "/booking", method = RequestMethod.PUT)
+	public ResponseEntity<?> unBookingTour(@RequestBody Tour tour) {
+		LOGGER.info("start updateTour");
+		try {
+			return new ResponseEntity<>(tourService.unBooking(tour), HttpStatus.OK);
+		} catch (Exception e) {
+			LOGGER.info("Error in updateTour. " + e.getLocalizedMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value = "/updatetour", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateTourByManager(@RequestBody Tour tour) {
 		LOGGER.info("start updateTour");
 		try {

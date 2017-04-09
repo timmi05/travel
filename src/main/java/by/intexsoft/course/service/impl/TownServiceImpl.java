@@ -3,6 +3,7 @@ package by.intexsoft.course.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import by.intexsoft.course.model.Country;
@@ -21,7 +22,7 @@ public class TownServiceImpl implements TownService {
 
 	@Override
 	public List<Town> findAll() {
-		return townRepository.findAll();
+		return townRepository.findAll(new Sort("name"));
 	}
 
 	@Override

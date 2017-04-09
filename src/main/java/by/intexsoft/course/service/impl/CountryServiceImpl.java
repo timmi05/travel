@@ -3,6 +3,7 @@ package by.intexsoft.course.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import by.intexsoft.course.model.Country;
@@ -20,7 +21,7 @@ public class CountryServiceImpl implements CountryService {
 
 	@Override
 	public List<Country> findAll() {
-		return ñountryRepository.findAll();
+		return ñountryRepository.findAll(new Sort("name"));
 	}
 
 	@Override

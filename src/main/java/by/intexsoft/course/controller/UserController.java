@@ -46,6 +46,17 @@ public class UserController {
 		}
 	}
 
+	@RequestMapping(value = "/registration", method = RequestMethod.POST)
+	public ResponseEntity<?> registrationUser(@RequestBody User user) {
+		LOGGER.info("Start addUser");
+		try {
+			return new ResponseEntity<>(userService.registration(user), HttpStatus.CREATED);
+		} catch (Exception e) {
+			LOGGER.info("Error in addUser. " + e.getLocalizedMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	public ResponseEntity<?> addUser(@RequestBody User user) {
 		LOGGER.info("Start addUser");

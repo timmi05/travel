@@ -1,2 +1,27 @@
+<nav class="navbar navbar-default">
+    <div>
+        <div class="nav navbar-nav navbar-right">
+            <div *ngIf="!isLoggedIn()">
+                <a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span>Войти</a>
+                <a routerLink="/registration" routerLinkActive="active">Регистрация</a>
+            </div>
+            <p *ngIf="welcomeName" class="navbar-text">Приветствуем Вас, <b>{{welcomeName}}</b></p>
+            <div *ngIf="isLoggedIn()">
+                <span><a routerLink="/mytours" routerLinkActive="active">Мой кабинет</a></span>
+                <span><a (click)="logout()">Выход</a>
+                </span>
+            </div>
+            <a routerLink="/home" routerLinkActive="active">Домашняя страница</a>
+            <span *ngIf="hasManagerAuthority() || hasAdminAuthority()">
+                <a routerLink="/all-country" routerLinkActive="active">Работа с турами</a>
+            </span>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <router-outlet></router-outlet>
+</div>
 
-<router-outlet></router-outlet>
+
+
+

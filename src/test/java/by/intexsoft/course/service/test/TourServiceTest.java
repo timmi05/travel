@@ -1,6 +1,7 @@
 package by.intexsoft.course.service.test;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -48,8 +49,8 @@ public class TourServiceTest {
 
 	@Before
 	public void testIn() {
-		int testObjectsCount = 24;
-		for (int i = 23; i < testObjectsCount; i++) {
+		int testObjectsCount = 5;
+		for (int i = 0; i < testObjectsCount; i++) {
 			ñountry = new Country();
 			ñountry.name = ("name" + i);
 			ñountryService.save(ñountry);
@@ -75,7 +76,6 @@ public class TourServiceTest {
 			tour.user = user;
 			tour.archive = false;
 			tour.persons = 3;
-			tour.booking = new Date();
 			tour.startDate = new Date();
 			tour.endDate = new Date();
 			tour.hot = true;
@@ -97,9 +97,20 @@ public class TourServiceTest {
 		townService.deleteAll();
 		ñountryService.deleteAll();
 	}
-
+	
 	@Test
-	public void test() {
-		Assert.assertNotNull(ñountryService);
+	public void findByName() {
+		Town someTown = townService.findByName("town2");	
+		List<Tour> tours = tourService.findByTown(someTown);			
+		Assert.assertTrue(tours.size() == 1);
+	}
+	
+	@Test
+	public void findByid() {
+		Town someTown = townService.findByName("town2");	
+		List<Tour> tours = tourService.findByTown(someTown);			
+		Tour newTour = tours.get(0);
+		Tour lastTour = tourService.booking(newTour);
+		Assert.assertNotNull(lastTour);
 	}
 }

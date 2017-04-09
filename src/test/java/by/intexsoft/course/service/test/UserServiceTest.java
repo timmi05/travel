@@ -45,21 +45,16 @@ public class UserServiceTest {
 	}
 
 	@Test
-	public void test() {
-		Assert.assertNotNull(userService);
-	}
-
-	@Test
 	public void testRegistration() {
 		user = new User();
-		String username = "loginz";
+		String username = "loginx";
 		user.username = username;
 		user.password = "pswd";
 		user.firstName = "qwerty";
 		user.lastName = "qwerty";
 		user.mail = "qwerty";
 		user.phoneNumber = "qwerty";
-		userService.save(user);
+		userService.registration(user);
 		User registrdUser = userService.findByUsername(username);
 		Assert.assertNotNull(registrdUser);
 	}

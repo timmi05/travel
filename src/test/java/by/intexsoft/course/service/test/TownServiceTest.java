@@ -20,7 +20,7 @@ public class TownServiceTest {
 
 	@Autowired
 	private CountryService ñountryService;
-	
+
 	@Autowired
 	private TownService townService;
 
@@ -35,7 +35,7 @@ public class TownServiceTest {
 			ñountry.name = ("name" + i);
 			ñountryService.save(ñountry);
 			town = new Town();
-			town.name = ("town"+i);
+			town.name = ("town" + i);
 			town.country = ñountry;
 			townService.save(town);
 		}
@@ -48,7 +48,9 @@ public class TownServiceTest {
 	}
 
 	@Test
-	public void test() {
-		Assert.assertNotNull(ñountryService);
+	public void findByName() {
+		String someTown = "town2";
+		Town town = townService.findByName(someTown);
+		Assert.assertNotNull(town);
 	}
 }

@@ -16,15 +16,22 @@ import {TownService} from "./service/town.service";
 import {HotelService} from "./service/hotel.service";
 import {TourService} from "./service/tour.service";
 import {UserService} from "./service/user.service";
-import { MyDatePickerModule } from 'mydatepicker';
+import {MyDatePickerModule} from 'mydatepicker';
+import {RegistrationComponent} from "./registration/registration.component";
+import {CustomerComponent} from "./customer/customer.component";
 
 @NgModule({
-    imports: [MyDatePickerModule, BrowserModule, FormsModule, HttpModule, AppRoutingModule, CommonModule, ReactiveFormsModule, RouterModule],
-    declarations: [AppComponent, CountryComponent, LoginComponent, HomeComponent],
+    imports: [MyDatePickerModule, BrowserModule, FormsModule,
+        HttpModule, AppRoutingModule, CommonModule,
+        ReactiveFormsModule, RouterModule],
+    declarations: [AppComponent, CountryComponent, LoginComponent,
+        HomeComponent, RegistrationComponent, CustomerComponent],
     providers: [{
         provide: LocationStrategy,
         useClass: HashLocationStrategy
-    }, CountryService, LoginService, AuthorizationGuard, TownService, HotelService, TourService, UserService],
+    }, CountryService, LoginService, AuthorizationGuard,
+        TownService, HotelService, TourService,
+        UserService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

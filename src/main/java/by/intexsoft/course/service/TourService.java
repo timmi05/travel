@@ -16,19 +16,29 @@ import by.intexsoft.course.model.User;
 public interface TourService {
 
 	/**
-	 * Find all {@link User}
+	 * Find all {@link Tour}
 	 */
 	List<Tour> findAll();
 	
+	/**
+	 * Find {@link Tour} for archive
+	 */
+	List<Tour> findForArchive();
+
 	/**
 	 * Find all {@link User}
 	 */
 	List<Tour> findTours(Tour tour);
 
-//	/**
-//	 * Find {@link Tour}
-//	 */
-//	Tour findByName(String name);
+	/**
+	 * Find all {@link User}
+	 */
+	List<Tour> findToursForManager(Tour tour);
+	
+	// /**
+	// * Find {@link Tour}
+	// */
+	// Tour findByName(String name);
 
 	/**
 	 * Find List {@link Tour}s by {@link User}
@@ -65,9 +75,17 @@ public interface TourService {
 	 */
 	@Transactional
 	Tour save(Tour tour);
-	
+
 	@Transactional
 	Tour update(Tour tour);
+		
+	Tour findById(Long id);
+
+	@Transactional
+	Tour booking(Tour tour);
+	
+	@Transactional
+	Tour unBooking(Tour tour);
 
 	@Transactional
 	void deleteAll();

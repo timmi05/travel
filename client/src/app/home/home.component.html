@@ -1,7 +1,72 @@
-<h1 align="center">Home page</h1>
-<div align="center">
-    <nav>
-        <a routerLink="/all-country" routerLinkActive="active"> All Countries</a>
-        <a routerLink="/login" routerLinkActive="active">Login page</a>
-    </nav>
+<form [formGroup]="chooseDateForm" novalidate>
+    <div>
+        <my-date-picker name="choosestartdate" [options]="myDatePickerOptions"
+                        formControlName="chooseStartDate"></my-date-picker>
+    </div>
+    <div>
+        <my-date-picker name="chooseуndвate" [options]="myDatePickerOptions"
+                        formControlName="chooseEndDate"></my-date-picker>
+    </div>
+</form>
+
+<div class="add-tour-content">
+    <select [(ngModel)]="selectedCountry" (change)="onChangeCountry()">
+        <option *ngFor="let country of countries"
+                [ngValue]='country'>{{country.name}}
+        </option>
+    </select>
+    <a *ngIf="selectedCountry" (click)="onSubmitResetCountry()">Сброс</a>
+    <div>Выбрана страна: {{selectedCountry && selectedCountry.name}}</div>
+
+
+    <select [(ngModel)]="selectedTown" (change)="onChangeTown()">
+        <option *ngFor="let town of towns" [ngValue]='town'>{{town.name}}</option>
+    </select>
+    <div>Выбран город: {{selectedTown && selectedTown.name}}</div>
+
+
+    <select [(ngModel)]="selectedHotel">
+        <option *ngFor="let hotel of hotels" [ngValue]='hotel'>{{hotel && hotel.name + " " + hotel.address}}</option>
+    </select>
+    <div>Выбран отель: {{selectedHotel && selectedHotel.name}}</div>
+
+    <div>
+        <form name="form-tour" (ngSubmit)="onSubmitFindTour()">
+            <input name="submit"
+                   class="btn btn-form" type="submit"
+                   value="Найти"/>
+        </form>
+    </div>
+</div>
+
+<div *ngIf="tours" class="panel">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Дата заезад</th>
+            <th>Ночей</th>
+            <th>Отель</th>
+            <th>Город</th>
+            <th>Разм.</th>
+            <th>Цена</th>
+            <th>Страна</th>
+            <th *ngIf="hasAuthority()">Бронь</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr *ngFor="let tour of tours">
+            <td>{{tour.startDate | date: 'dd.MM.yyyy'}}</td>
+            <td>{{tour.nights}}</td>
+            <td>{{tour.hotel.name}}</td>
+            <td>{{tour.town.name}}</td>
+            <td>{{tour.persons}}</td>
+            <td>{{tour.price}}</td>
+            <td>{{tour.country.name}}</td>
+            <td>
+                <button class="btn btn-warning" *ngIf="hasAuthority()" (click)="onBooking(tour)">Забронировать</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

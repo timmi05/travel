@@ -17,7 +17,7 @@ export class AuthorizationGuard implements CanActivate {
         const roles = route.data["roles"] as Array<string>;
         const user: User = LoginService.getCurrentUser();
         if (roles.length > 0 && user) {
-            if (AuthorizationGuard.checkRoles(roles, user.authorities))
+            if (AuthorizationGuard.checkAuthorities(roles, user.authorities))
                 return true;
         }
         alert('You don\'t have permissions!');
@@ -25,13 +25,23 @@ export class AuthorizationGuard implements CanActivate {
         return false;
     }
 
-    private static checkRoles(avialableRoleList: string[], currentRoleList: Authority[]): boolean {
-        for (let avialableRole = 0; avialableRole < avialableRoleList.length; avialableRole++) {
-            for (let userRole = 0; userRole < currentRoleList.length; userRole++)
-                if (avialableRoleList[avialableRole] == currentRoleList[userRole].authority) {
+    private static checkAuthorities(avialableAuthorityList: string[], currentAuthorityList: Authority[]): boolean {
+        for (let avialableAuthority = 0; avialableAuthority < avialableAuthorityList.length; avialableAuthority++) {
+            for (let userAuthority = 0; userAuthority < currentAuthorityList.length; userAuthority++)
+                if (avialableAuthorityList[avialableAuthority] == currentAuthorityList[userAuthority].authority) {
                     return true;
                 }
         }
+        return false;
+    }
+
+    public static hasAuthority(authority: string): boolean {
+        const user: User = LoginService.getCurrentUser();
+        if (user != null)
+            for (let currentAuthority of user.authorities) {
+                if (currentAuthority.authority === authority)
+                    return true;
+            }
         return false;
     }
 }

@@ -7,7 +7,7 @@ import {LoginService} from "../authorization/login.service";
 @Injectable()
 export class UserService {
 
-    private usersUrl: string = 'travel/user';
+    private usersUrl: string = 'travel/registration';
 
     constructor(private http: Http) {
     }
@@ -24,11 +24,8 @@ export class UserService {
             .catch(UserService.handleError);
     }
 
-    newUser(user: User) {
-        const body = JSON.stringify({
-            username: user.username, password: user.password, firstName: user.firstName,
-            lastName: user.lastName, phoneNumber: user.phoneNumber, mail: user.mail
-        });
+    registrationUser(user: User) {
+        const body = user;
         return this.http.post(this.usersUrl, body).map(() => {
             return true;
         });

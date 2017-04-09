@@ -61,11 +61,6 @@ public class HotelServiceTest {
 	}
 
 	@Test
-	public void test() {
-		Assert.assertNotNull(countryService);
-	}
-
-	@Test
 	public void findByCountry() {
 		String someCountry = "name2";		
 		ñountry = countryService.findByName(someCountry);

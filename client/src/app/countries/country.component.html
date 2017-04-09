@@ -10,141 +10,181 @@
 </form>
 
 <div class="add-tour-content">
-<select [(ngModel)]="selectedCountry" (change)="onChangeCountry($event)">
+<select [(ngModel)]="selectedCountry" (change)="onChangeCountry()">
     <option *ngFor="let country of countries"
             [ngValue]='country'>{{country.name}}
     </option>
-</select>
+</select> <a *ngIf="selectedCountry" (click)="onSubmitResetCountry()">Сброс</a>
+
+    <div *ngIf="selectedCountry">
+        <form name="form-edit-country" (ngSubmit)="onSubmitEditCountry()" >
+            <input name="submit"
+                   class="btn btn-form" type="submit"
+                   value="Редактировать"/>
+        </form>
+    </div>
+
 <div>Выбрана страна: {{selectedCountry && selectedCountry.name}}</div>
 
 
 <select [(ngModel)]="selectedTown" (change)="onChangeTown()">
     <option *ngFor="let town of towns" [ngValue]='town'>{{town.name}}</option>
 </select>
-<div>Выбран город: {{selectedTown && selectedTown.name}}</div>
+    <div *ngIf="selectedTown">
+        <form name="form-edit-town" (ngSubmit)="onSubmitEditTown()" >
+            <input name="submit"
+                   class="btn btn-form" type="submit"
+                   value="Редактировать"/>
+        </form>
+    </div>
+
+    <div>Выбран город: {{selectedTown && selectedTown.name}}</div>
 
 
 <select [(ngModel)]="selectedHotel">
     <option *ngFor="let hotel of hotels" [ngValue]='hotel'>{{hotel && hotel.name + " " + hotel.address}}</option>
 </select>
+
+    <div *ngIf="selectedHotel">
+        <form name="form-edit-hotel" (ngSubmit)="onSubmitEditHotel()" >
+            <input name="submit"
+                   class="btn btn-form" type="submit"
+                   value="Редактировать"/>
+        </form>
+    </div>
+
 <div>Выбран отель: {{selectedHotel && selectedHotel.name}}</div>
 
-<label class="btn-form" for="modal-country">Добавить страну</label>
-<!-- Модальное окно -->
-<div class="modal">
-    <input class="modal-open" id="modal-country" type="checkbox" hidden>
-    <div class="modal-wrap" aria-hidden="true" role="dialog">
-        <label class="modal-overlay" for="modal-country"></label>
-        <div class="modal-dialog">
-            <div class="modal-header">
-                <h2>Форма в Модальное окно!</h2>
-                <h3>Добавить страну</h3>
-                <label class="btn-close" for="modal-country" aria-hidden="true">×</label>
-            </div>
-            <div class="modal-body">
-                <form name="form" novalidate [formGroup]="countryForm" (ngSubmit)="onSubmitCountry()">
-                    <input name="countryName" placeholder="Название страны" class="textbox"
-                           formControlName="countryName" required/>
-                    <input for="modal-country" aria-hidden="true" name="submit"
-                           [disabled]="countryForm.invalid || loading" class="btn btn-form" type="submit"
-                           value="Добавить"/>
-                </form>
-                <label class="btn-form" for="modal-country" aria-hidden="true">Отмена</label>
-            </div>
-        </div>
+    <div>
+        <form name="form-add-country" (ngSubmit)="onSubmitAddCountry()">
+            <input name="submit"
+                   class="btn btn-form" type="submit"
+                   value="Добавить страну"/>
+        </form>
     </div>
-</div>
 
-<label class="btn-form" for="modal-town" [hidden]="selectedCountry === null">Добавить город</label>
-<!-- Модальное окно -->
-<div class="modal">
-    <input class="modal-open" id="modal-town" type="checkbox" hidden>
-    <div class="modal-wrap" aria-hidden="true" role="dialog">
-        <label class="modal-overlay" for="modal-town"></label>
-        <div class="modal-dialog">
-            <div class="modal-header">
-                <h2>Форма в Модальное окно!</h2>
-                <h3>Добавить город в
-                    <div>{{selectedCountry && selectedCountry.name}}</div>
+    <div [hidden]="selectedCountry === null">
+        <form name="form-add-town" (ngSubmit)="onSubmitAddTown()">
+            <input name="submit"
+                   class="btn btn-form" type="submit"
+                   value="Добавить город"/>
+        </form>
+    </div>
+
+    <div [hidden]="selectedTown === null">
+        <form name="form-add-hotel" (ngSubmit)="onSubmitAddHotel()">
+            <input name="submit"
+                   class="btn btn-form" type="submit"
+                   value="Добавить отель"/>
+        </form>
+    </div>
+
+    <div [hidden]="selectedHotel === null">
+        <form name="form-add-tour" (ngSubmit)="onSubmitAddTour()">
+            <input name="submit"
+                   class="btn btn-form" type="submit"
+                   value="Добавить тур"/>
+        </form>
+    </div>
+
+    <div *ngIf="addCountry" class="modal-body">
+        <form name="form" novalidate [formGroup]="countryForm" (ngSubmit)="onSubmitCountry()">
+            <input name="countryName" placeholder="Название страны" class="textbox"
+                   formControlName="countryName" required/>
+            <input name="submit"
+                   [disabled]="countryForm.invalid || loading" class="btn btn-form" type="submit"
+                   value="Внести изменения" />
+        </form>
+        <form name="form-add-country-cancel" (ngSubmit)="onSubmitAddCountryCancel()">
+            <input name="submit"
+                   class="btn btn-form" type="submit"
+                   value="Отмена"/>
+        </form>
+    </div>
+
+    <div *ngIf="addTown">
+        <div *ngIf="!editTown" class="modal-header">
+            <h3>Добавить город в <span>{{selectedCountry && selectedCountry.name}}</span>
+            </h3>
+        </div>
+            <div *ngIf="editTown" class="modal-header">
+                <h3>Внести изменения в городе <span>{{selectedTown && selectedTown.name}}</span>
                 </h3>
-                <label class="btn-close" for="modal-town" aria-hidden="true">×</label>
             </div>
-            <div class="modal-body">
-                <form name="form" novalidate [formGroup]="townForm" (ngSubmit)="onSubmitTown()">
-                    <input name="townName" placeholder="Название города" class="textbox"
-                           formControlName="townName" required/>
-                    <input name="submit" [disabled]="townForm.invalid || loading" class="btn btn-form" type="submit"
-                           value="Добавить" for="modal-town" aria-hidden="true"/>
-                </form>
-                <label class="btn-form" for="modal-town" aria-hidden="true">Отмена</label>
-            </div>
+        <div class="modal-body">
+            <form name="form" novalidate [formGroup]="townForm" (ngSubmit)="onSubmitTown()">
+                <input name="townName" placeholder="Название города" class="textbox"
+                       formControlName="townName" required/>
+                <input name="submit" [disabled]="townForm.invalid || loading" class="btn btn-form" type="submit"
+                       value="Внести изменения" />
+            </form>
+            <form name="form-add-town-cancel" (ngSubmit)="onSubmitAddTownCancel()">
+                <input name="submit"
+                       class="btn btn-form" type="submit"
+                       value="Отмена"/>
+            </form>
         </div>
     </div>
-</div>
 
-<label class="btn-form" for="modal-hotel"  [hidden]="selectedTown === null">Добавить отель</label>
-<!-- Модальное окно -->
-<div class="modal">
-    <input class="modal-open" id="modal-hotel" type="checkbox" hidden>
-    <div class="modal-wrap" aria-hidden="true" role="dialog">
-        <label class="modal-overlay" for="modal-hotel"></label>
-        <div class="modal-dialog">
-            <div class="modal-header">
-                <h2>Форма в Модальное окно!</h2>
-                <h3>Добавить отель в городе
-                    <div>{{selectedTown && selectedTown.name}}</div>
-                </h3>
-                <label class="btn-close" for="modal-hotel" aria-hidden="true">×</label>
-            </div>
-            <div class="modal-body">
-                <form name="form" novalidate [formGroup]="hotelForm" (ngSubmit)="onSubmitHotel()">
-                    <input name="hotelName" placeholder="Название отеля" class="textbox"
-                           formControlName="hotelName" required/>
-                    <input name="address" placeholder="Адрес отеля" class="textbox"
-                           formControlName="address" required/>
-                    <input name="submit" [disabled]="hotelForm.invalid || loading" class="btn btn-form" type="submit"
-                           value="Добавить" for="modal-hotel" aria-hidden="true"/>
-                </form>
-                <label class="btn-form" for="modal-hotel" aria-hidden="true">Отмена</label>
-            </div>
+
+    <div *ngIf="addHotel">
+        <div *ngIf="!editHotel" class="modal-header">
+            <h3>Добавить отель в <span>{{selectedTown && selectedTown.name}}</span>
+            </h3>
+        </div>
+        <div *ngIf="editHotel" class="modal-header">
+            <h3>Внести изменения в отеле <span>{{selectedHotel && selectedHotel.name}}</span>
+            </h3>
+        </div>
+        <div class="modal-body">
+            <form name="form" novalidate [formGroup]="hotelForm" (ngSubmit)="onSubmitHotel()">
+                <input name="hotelName" placeholder="Название отеля" class="textbox"
+                       formControlName="hotelName" required/>
+                <input name="address" placeholder="Адрес отеля" class="textbox"
+                       formControlName="address" required/>
+                <input *ngIf="!editHotel" name="submit" [disabled]="hotelForm.invalid || loading" class="btn btn-form" type="submit"
+                       value="Добавить"/>
+                <input *ngIf="editHotel" name="submit" [disabled]="hotelForm.invalid || loading" class="btn btn-form" type="submit"
+                       value="Внести изменения"/>
+            </form>
+            <form name="form-add-hotel-cancel" (ngSubmit)="onSubmitAddHotelCancel()">
+                <input name="submit"
+                       class="btn btn-form" type="submit"
+                       value="Отмена"/>
+            </form>
         </div>
     </div>
-</div>
 
-<label class="btn-form" for="modal-tour"  [hidden]="selectedHotel === null">Добавить тур</label>
-<!-- Модальное окно -->
-<div class="modal">
-    <input class="modal-open" id="modal-tour" type="checkbox" hidden>
-    <div class="modal-wrap" aria-hidden="true" role="dialog">
-        <label class="modal-overlay" for="modal-tour"></label>
-        <div class="modal-dialog">
-            <div class="modal-body">
-                <form name="form" novalidate [formGroup]="tourForm" (ngSubmit)="onSubmitTour()">
-
-                    <my-date-picker name="startDate" [options]="myDatePickerOptions"
-                                    [placeholder]="placeholder" formControlName="startDate" required  ></my-date-picker>
-
-
-                    <input name="price" placeholder="Цена" class="textbox"
-                           formControlName="price" required/>
-                    <input name="nights" placeholder="Количество ночей" class="textbox"
-                           formControlName="nights" required/>
-                    <input name="persons" placeholder="Количество персон" class="textbox"
-                           formControlName="persons" required/>
-                    <input name="submit" [disabled]="tourForm.invalid || loading" class="btn btn-form" type="submit"
-                           value="Добавить" for="modal-tour" aria-hidden="true"/>
-                </form>
-                <label class="btn-form" for="modal-tour" aria-hidden="true">Отмена</label>
-            </div>
-            <div class="modal-header">
-                <h3>Добавить тур в отель
-                    <div>{{selectedHotel && selectedHotel.name}}</div>
-                </h3>
-                <label class="btn-close" for="modal-tour" aria-hidden="true">×</label>
-            </div>
+    <div *ngIf="addTour">
+        <div *ngIf="!editTour" class="modal-header">
+            <h3>Добавить тур в <span>{{selectedHotel && selectedHotel.name}}</span>
+            </h3>
+        </div>
+        <div *ngIf="editTour" class="modal-header">
+            <h3>Внести изменения в туре</h3>
+        </div>
+        <div class="modal-body">
+            <form name="form" novalidate [formGroup]="tourForm" (ngSubmit)="onSubmitTour()">
+                <my-date-picker name="startDate" [options]="myDatePickerOptions"
+                                [placeholder]="placeholder" formControlName="startDate" required  ></my-date-picker>
+                <input name="price" placeholder="Цена" class="textbox"
+                       formControlName="price" required/>
+                <input name="nights" placeholder="Количество ночей" class="textbox"
+                       formControlName="nights" required/>
+                <input name="persons" placeholder="Количество персон" class="textbox"
+                       formControlName="persons" required/>
+                <input *ngIf="!editTour" name="submit" [disabled]="tourForm.invalid || loading" class="btn btn-form" type="submit"
+                       value="Добавить"/>
+                <input *ngIf="editTour" name="submit" [disabled]="tourForm.invalid || loading" class="btn btn-form" type="submit"
+                       value="Внести изменения"/>
+            </form>
+            <form name="form-add-tour-cancel" (ngSubmit)="onSubmitAddTourCancel()">
+                <input name="submit"
+                       class="btn btn-form" type="submit"
+                       value="Отмена"/>
+            </form>
         </div>
     </div>
-</div>
 
 <div>
     <form name="form-tour" (ngSubmit)="onSubmitFindTour()">
@@ -153,9 +193,9 @@
                value="Найти"/>
     </form>
 </div>
-</div>
 
-<div *ngIf="tours" class="panel">
+
+<div *ngIf="tours" class="tours">
     <table class="table table-striped">
         <thead>
         <tr>
@@ -163,9 +203,13 @@
             <th>Ночей</th>
             <th>Отель</th>
             <th>Город</th>
-            <th>Размер</th>
+            <th>Разм.</th>
             <th>Цена</th>
             <th>Страна</th>
+            <th>Редактировать</th>
+            <th>Действия</th>
+            <th>Бронь с</th>
+            <th>Заказчик</th>
         </tr>
         </thead>
         <tbody>
@@ -178,7 +222,27 @@
             <td>{{tour.persons}}</td>
             <td>{{tour.price}}</td>
             <td>{{tour.country.name}}</td>
+            <td>
+                <button class="btn btn-warning" *ngIf="!tour.booking"
+                        (click)="onSubmitEditTour(tour)" >Редактировать</button>
+                <button class="btn btn-warning" *ngIf="tour.booking && !tour.paid" (click)="unBooking(tour)">Снять бронь</button>
+            </td>
+
+            <td>
+                <button class="btn btn-warning" *ngIf="tour.booking && !tour.paid" (click)="onPaid(tour)">Оплачено</button>
+                <button class="btn btn-warning" *ngIf="!tour.booking" (click)="onArchive(tour)">В архив</button>
+            </td>
+            <td>{{tour.booking | date: 'dd.MM.yyyy'}}</td>
+            <td>
+                <div *ngIf="tour.user">
+                    {{tour.user.phoneNumber}}
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
 </div>
+</div>
+
+
+

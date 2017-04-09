@@ -1,0 +1,31 @@
+<div *ngIf="tours" class="panel">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Дата заезад</th>
+            <th>Ночей</th>
+            <th>Отель</th>
+            <th>Город</th>
+            <th>Размер</th>
+            <th>Цена</th>
+            <th>Страна</th>
+            <th>Бронь</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr *ngFor="let tour of tours">
+            <td>{{tour.startDate | date: 'dd.MM.yyyy'}}</td>
+            <td>{{tour.nights}}</td>
+            <td>{{tour.hotel.name}}</td>
+            <td>{{tour.town.name}}</td>
+            <td>{{tour.persons}}</td>
+            <td>{{tour.price}}</td>
+            <td>{{tour.country.name}}</td>
+            <td>
+                <button class="btn btn-warning" *ngIf="!tour.paid" (click)="unBooking(tour)">Снять бронь</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

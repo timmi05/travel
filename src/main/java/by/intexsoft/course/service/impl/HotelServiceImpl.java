@@ -3,6 +3,7 @@ package by.intexsoft.course.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import by.intexsoft.course.model.Country;
@@ -22,7 +23,7 @@ public class HotelServiceImpl implements HotelService {
 
 	@Override
 	public List<Hotel> findAll() {
-		return hotelRepository.findAll();
+		return hotelRepository.findAll(new Sort("name"));
 	}
 
 	@Override

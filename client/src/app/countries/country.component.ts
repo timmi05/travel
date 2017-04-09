@@ -21,8 +21,9 @@ export class CountryComponent implements OnInit {
     allTowns: Town[] = [];
     towns: Town[] = [];
     allHotels: Hotel[] = [];
-    tours: Tour[] = [];
+    tours: Tour[] = null;
     hotels: Hotel[] = [];
+    tour: Tour;
     selectedTown: Town;
     selectedCountry: Country;
     selectedHotel: Hotel;
@@ -36,13 +37,17 @@ export class CountryComponent implements OnInit {
     startDate: Date;
     chooseStartDate: Date;
     chooseEndDate: Date;
-
-    // myForm: FormGroup;
+    addCountry: Boolean = false;
+    editCountry: Boolean = false;
+    addTown: Boolean = false;
+    editTown: Boolean = false;
+    addHotel: Boolean = false;
+    editHotel: Boolean = false;
+    addTour: Boolean = false;
+    editTour: Boolean = false;
 
     constructor(private countryService: CountryService, private townService: TownService,
                 private hotelService: HotelService, private tourService: TourService) {
-        // , private formBuilder: FormBuilder) {
-
     }
 
     myDatePickerOptions: IMyOptions = {
@@ -67,18 +72,7 @@ export class CountryComponent implements OnInit {
             11: 'Нояб',
             12: 'Дек'
         },
-    };
-
-    // setDate(): void {
-    //     // Set today date using the setValue function
-    //     let date = new Date();
-    //     this.myForm.setValue({myDate: {
-    //         date: {
-    //             year: date.getFullYear(),
-    //             month: date.getMonth() + 1,
-    //             day: date.getDate()}
-    //     }});
-    // }
+    }
 
     ngOnInit(): void {
         this.loadAllCountries();
@@ -88,15 +82,6 @@ export class CountryComponent implements OnInit {
             chooseStartDate: new FormControl('', Validators.required),
             chooseEndDate: new FormControl('', Validators.required)
         });
-
-        // this.myForm = this.formBuilder.group({
-        //     // Empty string means no initial value. Can be also specific date for
-        //     // example: {date: {year: 2018, month: 10, day: 9}} which sets this date to initial
-        //     // value.
-        //
-        //     startDate: ['', Validators.required]
-        //     // other controls are here...
-        // });
     }
 
     private loadAllCountries() {
@@ -107,40 +92,133 @@ export class CountryComponent implements OnInit {
         this.countryForm = new FormGroup({
             countryName: new FormControl('', Validators.required),
         });
+        this.towns = [];
     }
+
+    onSubmitAddCountry(){
+        this.addCountry = true;
+        this.editCountry = false;
+        this.countryForm = new FormGroup({
+            countryName: new FormControl('', Validators.required),
+        });
+    }
+
+    onSubmitAddCountryCancel(){
+        this.addCountry = false;
+        this.editCountry = false;
+        this.countryForm = new FormGroup({
+            countryName: new FormControl('', Validators.required),
+        });
+    }
+
+    onSubmitEditCountry() {
+        this.addCountry = true;
+        this.editCountry = true;
+        this.countryForm.setValue({
+            countryName: this.selectedCountry.name
+        })
+    }
+
+    onSubmitResetCountry() {
+        this.selectedCountry = null;
+        this.onChangeCountry();
+    }
+
+
+    handlerTown = function(townsFromService) {
+        this.allTowns = townsFromService;
+        this.onChangeCountry();
+    };
 
     private loadAllTowns() {
         this.townService.getTowns()
-            .subscribe(townsFromService => this.allTowns = townsFromService);
+            .subscribe((townsFromService) => this.handlerTown(townsFromService));
         this.loadAllHotels();
-        this.towns = [];
-        this.selectedTown = null;
         this.townForm = new FormGroup({
             townName: new FormControl('', Validators.required),
         });
     }
 
+    onSubmitAddTown(){
+        this.addTown = true;
+        this.editTown = false;
+        this.townForm = new FormGroup({
+            townName: new FormControl('', Validators.required),
+        });
+    }
+
+    onSubmitAddTownCancel(){
+        this.addTown = false;
+        this.editTown = false;
+        this.townForm = new FormGroup({
+            townName: new FormControl('', Validators.required),
+        });
+    }
+
+    onSubmitEditTown() {
+        this.addTown = true;
+        this.editTown = true;
+        this.townForm.setValue({
+            townName: this.selectedTown.name
+        })
+    }
+
+    handlerHotel = function(hotelsFromService) {
+        this.allHotels = hotelsFromService;
+        this.onChangeTown();
+
+    };
+
     private loadAllHotels() {
         this.hotelService.getHotels()
-            .subscribe(hotelsFromService => this.allHotels = hotelsFromService);
+            .subscribe((hotelsFromService) => this.handlerHotel(hotelsFromService));
         this.loading = false;
-        this.selectedHotel = null;
-        this.hotels = [];
         this.hotelForm = new FormGroup({
             hotelName: new FormControl('', Validators.required),
             address: new FormControl('', Validators.required),
         });
     }
 
-    onChangeCountry(event: Event) {
-        console.log("Change selected country:" + this.selectedCountry.name + ". Time " + event.timeStamp)
+    onSubmitAddHotel(){
+        this.addHotel = true;
+        this.editHotel = false;
+        this.hotelForm = new FormGroup({
+            hotelName: new FormControl('', Validators.required),
+            address: new FormControl('', Validators.required),
+        });
+    }
+
+    onSubmitAddHotelCancel(){
+        this.addHotel = false;
+        this.editHotel = false;
+        this.hotelForm = new FormGroup({
+            hotelName: new FormControl('', Validators.required),
+            address: new FormControl('', Validators.required),
+        });
+    }
+
+    onSubmitEditHotel() {
+        this.addHotel = true;
+        this.editHotel = true;
+        this.hotelForm.setValue({
+            hotelName: this.selectedHotel.name,
+            address: this.selectedHotel.address
+        })
+    }
+
+    onChangeCountry() {
         this.towns = [];
         this.hotels = [];
         this.selectedTown = null;
         this.selectedHotel = null;
-        for (let town of this.allTowns) {
-            if (town.country.id === this.selectedCountry.id) {
-                this.towns.push(town);
+        this.onSubmitAddCountryCancel();
+        this.onSubmitAddTownCancel();
+        this.onSubmitAddHotelCancel();
+        if (this.selectedCountry) {
+            for (let town of this.allTowns) {
+                if (town.country.id === this.selectedCountry.id) {
+                    this.towns.push(town);
+                }
             }
         }
     }
@@ -148,51 +226,173 @@ export class CountryComponent implements OnInit {
     onChangeTown() {
         this.hotels = [];
         this.selectedHotel = null;
-        for (let hotel of this.allHotels) {
-            if (hotel.town.id === this.selectedTown.id) {
-                this.hotels.push(hotel);
+        this.onSubmitAddHotelCancel();
+        if (this.selectedTown) {
+            for (let hotel of this.allHotels) {
+                if (hotel.town.id === this.selectedTown.id) {
+                    this.hotels.push(hotel);
+                }
             }
         }
     }
 
     onSubmitCountry() {
         this.loading = true;
-        const country: Country = new Country(this.countryForm.value.countryName);
-        this.countryService.newCountry(country)
-            .subscribe(() => this.ngOnInit(),
-                error => this.errorCountryMsg(error));
+        let country: Country = null;
+       if (this.editCountry){
+           country = this.selectedCountry;
+           country.name = this.countryForm.value.countryName;
+           this.countryService.updateCountry(country)
+               .subscribe(
+                   () => this.ngOnInit(),
+                   error => this.errorCountryMsg(error));
+           this.addCountry = false;
+           this.editCountry = false;
+       }else{
+           country = new Country(this.countryForm.value.countryName);
+           this.countryService.newCountry(country)
+               .subscribe(
+                   () => this.ngOnInit(),
+                   error => this.errorCountryMsg(error));
+           this.addCountry = false;
+       }
     }
 
     onSubmitTown() {
         this.loading = true;
-        const town: Town = new Town(this.townForm.value.townName, this.selectedCountry);
-        this.townService.newTown(town)
-            .subscribe(() => this.loadAllTowns(),
-                error => this.errorTownMsg(error), () => this.onChangeCountry(event));
+        let town: Town = null;
+        if(this.editTown){
+            town = this.selectedTown;
+            town.name = this.townForm.value.townName;
+            this.townService.updateTown(town)
+                .subscribe(
+                    () => this.loadAllTowns(),
+                    error => this.errorTownMsg(error));
+            this.addTown = false;
+            this.editTown = false;
+        }else{
+            town = new Town(this.townForm.value.townName, this.selectedCountry);
+            this.townService.newTown(town)
+                .subscribe(
+                    () => this.loadAllTowns(),
+                    error => this.errorTownMsg(error));
+            this.addTown = false;
+        }
     }
 
     onSubmitHotel() {
         this.loading = true;
-        const hotel: Hotel = new Hotel(this.hotelForm.value.hotelName, this.hotelForm.value.address, this.selectedTown);
-        this.hotelService.newHotel(hotel)
-            .subscribe(() => this.loadAllHotels(),
-                error => this.errorHotelMsg(error), () => this.onChangeTown());
+       let hotel : Hotel = null;
+       if(this.editHotel){
+           hotel = this.selectedHotel;
+           hotel.name = this.hotelForm.value.hotelName;
+           hotel.address = this.hotelForm.value.address;
+           this.hotelService.updateHotel(hotel)
+               .subscribe(() => this.loadAllHotels(),
+                   error => this.errorHotelMsg(error));
+           this.addHotel = false;
+           this.editHotel = false;
+       }else{
+           hotel = new Hotel(this.hotelForm.value.hotelName, this.hotelForm.value.address, this.selectedTown);
+           this.hotelService.newHotel(hotel)
+               .subscribe(() => this.loadAllHotels(),
+                   error => this.errorHotelMsg(error));
+           this.addHotel = false;
+           this.editHotel = false;
+       }
+    }
+
+    onSubmitAddTour(){
+        this.addTour = true;
+        this.editTour = false;
+        this.tourForm = new FormGroup({
+            price: new FormControl('', Validators.required),
+            nights: new FormControl('', Validators.required),
+            persons: new FormControl('', Validators.required),
+            startDate: new FormControl('', Validators.required),
+        });
+    }
+
+    onSubmitAddTourCancel(){
+        this.addTour = false;
+        this.editTour = false;
+        this.removeTourForm();
+        // this.tourForm = new FormGroup({
+        //     price: new FormControl('', Validators.required),
+        //     nights: new FormControl('', Validators.required),
+        //     persons: new FormControl('', Validators.required),
+        //     startDate: new FormControl('', Validators.required),
+        // });
+    }
+
+    onSubmitEditTour(tour: Tour) {
+        this.tour = tour;
+        this.addTour = true;
+        this.editTour = true;
+        let date = new Date(this.tour.startDate);
+        this.tourForm.setValue({
+            price: this.tour.price,
+            nights: this.tour.nights,
+            persons: this.tour.persons,
+            startDate: {
+                date: {
+                    year: date.getFullYear().valueOf(),
+                    month: date.getMonth() + 1,
+                    day: date.getDate()
+                }
+            }
+        })
     }
 
     onSubmitTour() {
         this.loading = true;
-        const tour: Tour = new Tour();
-        tour.hotel = this.selectedHotel;
-        tour.town = this.selectedTown;
-        tour.country = this.selectedCountry;
-        tour.startDate = this.tourForm.value.startDate.jsdate;
-        tour.price = this.tourForm.value.price;
-        tour.nights = this.tourForm.value.nights;
-        tour.persons = this.tourForm.value.persons;
-        this.tourService.newTour(tour)
-            .subscribe(() => this.successfull('Тур'),
-                error => this.errorHotelMsg(error), () => this.removeTourForm());
+        let tour: Tour = null;
+        if (this.editTour){
+            tour = this.tour;
+            if (this.tourForm.value.startDate.jsdate) {
+                tour.startDate = this.tourForm.value.startDate.jsdate;
+            }
+            tour.price = this.tourForm.value.price;
+            tour.nights = this.tourForm.value.nights;
+            tour.persons = this.tourForm.value.persons;
+            this.tourService.update(tour)
+                .subscribe(() => this.onSubmitFindTour(),
+                    error => this.errorHotelMsg(error), );
+            this.onSubmitAddTourCancel();
+        } else {
+            tour = new Tour();
+            tour.hotel = this.selectedHotel;
+            tour.town = this.selectedTown;
+            tour.country = this.selectedCountry;
+            tour.startDate = this.tourForm.value.startDate.jsdate;
+            tour.price = this.tourForm.value.price;
+            tour.nights = this.tourForm.value.nights;
+            tour.persons = this.tourForm.value.persons;
+            this.tourService.newTour(tour)
+                .subscribe(() => this.onSubmitFindTour(),
+                    error => this.errorHotelMsg(error), );
+            this.onSubmitAddTourCancel();
+        }
+    }
 
+    unBooking(tour: Tour): void {
+        tour && this.tourService.unBookingTour(tour)
+            .subscribe(() => this.onSubmitFindTour(),
+            error => this.errorHotelMsg(error));
+    }
+
+    onPaid(tour: Tour): void {
+        tour.paid = true;
+        tour && this.tourService.update(tour)
+            .subscribe(() => this.onSubmitFindTour(),
+                error => this.errorHotelMsg(error));
+    }
+
+    onArchive(tour: Tour): void {
+        tour.archive = true;
+        tour && this.tourService.update(tour)
+            .subscribe(() => this.onSubmitFindTour(),
+                error => this.errorHotelMsg(error));
     }
 
     private removeTourForm() {
@@ -207,14 +407,14 @@ export class CountryComponent implements OnInit {
 
     onSubmitFindTour() {
         this.loading = true;
-        this.tours = [];
+        this.tours = null;
         const tour: Tour = new Tour();
         tour.hotel = this.selectedHotel;
         tour.town = this.selectedTown;
         tour.country = this.selectedCountry;
         tour.startDate = this.chooseDateForm.value.chooseStartDate.jsdate;
         tour.endDate = this.chooseDateForm.value.chooseEndDate.jsdate;
-        this.tourService.findTours(tour)
+        this.tourService.findToursForManager(tour)
             .subscribe(toursFromService => this.tours = toursFromService, error => this.errorFindTou(error),
                 () => this.afterFindTour());
     }
@@ -233,15 +433,6 @@ export class CountryComponent implements OnInit {
         console.log(error);
         this.loading = false;
         alert("Error while creating new town!");
-    }
-
-    private successfull(entity: String): void {
-        this.loading = false;
-        var a: String = '';
-        if (entity === 'Страна') {
-            a = 'а'
-        }
-        alert(entity + " успешно добавлен " + a);
     }
 
     private errorHotelMsg(error): void {
