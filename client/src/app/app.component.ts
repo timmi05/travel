@@ -7,7 +7,7 @@ import {Access} from "./constants/access";
 @Component({
     selector: 'my-app',
     templateUrl: './app.component.html',
-    styleUrls: ['appStyle.css'],
+    styleUrls: ['app.component.css'],
 })
 export class AppComponent extends Access{
     welcomeName: string;

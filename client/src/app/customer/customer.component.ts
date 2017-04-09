@@ -24,12 +24,12 @@ export class CustomerComponent implements OnInit {
     }
 
     private loadCustomer() {
-        this.tourService.getTours(LoginService.getCurrentUser())
+        this.tourService.loadUsersTours(LoginService.getCurrentUser())
             .subscribe(toursFromService => this.tours = toursFromService);
     }
 
     unBooking(tour: Tour): void {
-        tour && this.tourService.unBookingTour(tour)
+        tour && this.tourService.unBooking(tour)
             .subscribe(() => this.ngOnInit(), error => this.errorUnBokingTout(error));
     }
 

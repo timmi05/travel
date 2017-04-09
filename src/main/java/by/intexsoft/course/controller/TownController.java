@@ -1,7 +1,5 @@
 package by.intexsoft.course.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import by.intexsoft.course.model.Country;
 import by.intexsoft.course.model.Town;
-import by.intexsoft.course.service.CountryService;
 import by.intexsoft.course.service.TownService;
 
 /**
@@ -28,43 +24,38 @@ public class TownController {
 	@Autowired
 	private TownService townService;
 
-	@Autowired
-	private CountryService countryService;
-
 	/**
 	 * Return all {@link Town#name} in line
 	 */
 	@RequestMapping(value = "/town")
-	public List<Town> findAll() {
-		return townService.findAll();
-	}
-
-	/**
-	 * Return all {@link Town#name} in line
-	 */
-	@RequestMapping(value = "/townsincountry")
-	public List<Town> findByCountry(@RequestBody Country country) {
-		return townService.findByCountry(country);
+	public ResponseEntity<?> findAll() {
+		LOGGER.info("Start findAll towns");
+		try {
+			return new ResponseEntity<>(townService.findAll(), HttpStatus.OK);
+		} catch (Exception e) {
+			LOGGER.info("Error in findAll towns. " + e.getLocalizedMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@RequestMapping(value = "/town", method = RequestMethod.POST)
-	public ResponseEntity<?> addTown(@RequestBody Town town) {
-		LOGGER.info("Start addTown");
+	public ResponseEntity<?> add(@RequestBody Town town) {
+		LOGGER.info("Start add town");
 		try {
 			return new ResponseEntity<>(townService.save(town), HttpStatus.CREATED);
 		} catch (Exception e) {
-			LOGGER.info("Error in addTown. " + e.getLocalizedMessage());
+			LOGGER.info("Error in add town. " + e.getLocalizedMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@RequestMapping(value = "/town", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateTown(@RequestBody Town town) {
-		LOGGER.info("start updateTown");
+	public ResponseEntity<?> update(@RequestBody Town town) {
+		LOGGER.info("start update town");
 		try {
 			return new ResponseEntity<>(townService.update(town), HttpStatus.OK);
 		} catch (Exception e) {
-			LOGGER.info("Error in updateTown. " + e.getLocalizedMessage());
+			LOGGER.info("Error in update town. " + e.getLocalizedMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}

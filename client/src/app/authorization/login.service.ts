@@ -16,7 +16,7 @@ export class LoginService {
         const body = JSON.stringify({username: user.username, password: user.password});
         const options = new RequestOptions({headers: new Headers({'Content-Type': 'application/json'})});
         return this.http.post('/travel/login', body, options)
-            .map(this.extractData)
+            .map(this.handleResponse)
             .catch(LoginService.handleError);
     }
 
@@ -25,7 +25,7 @@ export class LoginService {
         localStorage.removeItem(environment.USER_KEY);
     }
 
-    private extractData(response: Response) {
+    private handleResponse(response: Response) {
         const token = response.json().token;
         const user = response.json().user;
         if (token && user) {
@@ -38,17 +38,8 @@ export class LoginService {
     }
 
     private static handleError(error: Response | any) {
-        let errMsg: string;
-        if (error instanceof Response) {
-            const body = error.json() || '';
-            const err = body.error || JSON.stringify(body);
-            errMsg = `${error.status} - ${error.statusText}`;
-            errMsg += `${err}`;
-        } else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        console.error(errMsg);
-        return Observable.throw(errMsg);
+        console.error(error.message ? error.message : error.toString());
+        return Observable.throw("неправильное имя пользователя или пароль");
     }
 
     static getCurrentUser() {

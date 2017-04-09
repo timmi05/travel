@@ -1,25 +1,21 @@
-h1 {
-  margin-top: 50px;
+.td-place{
+  padding-right: 15px;
+  vertical-align: top;
 }
 
-nav a {
-  padding: 5px 10px;
-  text-decoration: none;
-  margin-top: 20px;
-  display: inline-block;
-  background-color: #eee;
-  border-radius: 4px;
+div.tout-hr{
+  margin-bottom: -15px;
+  margin-top: -15px;
 }
 
-nav a:visited, a:link {
-  color: #34378b;
+.select-place{
+  min-width: 150px;
 }
 
-nav a:hover {
-  color: #000000;
-  background-color: #c4c5f1;
+.btn{
+  min-width: 100px;
 }
 
-nav a.active {
-  color: #c6c0e5;
+hr.solid-hr{
+  border-bottom: 1px solid #e5e5e5;
 }

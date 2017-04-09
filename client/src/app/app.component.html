@@ -1,19 +1,24 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
     <div>
-        <div class="nav navbar-nav navbar-right">
-            <div *ngIf="!isLoggedIn()">
-                <a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span>Войти</a>
-                <a routerLink="/registration" routerLinkActive="active">Регистрация</a>
+        <div class="nav navbar-nav navbar-right top-nav">
+            <div style="margin-right: 5px">
+                <p *ngIf="isLoggedIn()" class="navbar-text">Приветствуем Вас, <b>{{welcomeName}}</b></p>
             </div>
-            <p *ngIf="welcomeName" class="navbar-text">Приветствуем Вас, <b>{{welcomeName}}</b></p>
-            <div *ngIf="isLoggedIn()">
-                <span><a routerLink="/mytours" routerLinkActive="active">Мой кабинет</a></span>
-                <span><a (click)="logout()">Выход</a>
-                </span>
-            </div>
-            <a routerLink="/home" routerLinkActive="active">Домашняя страница</a>
-            <span *ngIf="hasManagerAuthority() || hasAdminAuthority()">
-                <a routerLink="/all-country" routerLinkActive="active">Работа с турами</a>
+        </div>
+        <div class="nav navbar-nav navbar-right top-nav" style="padding-top: 15px;">
+            <span *ngIf="!isLoggedIn()">
+                <a routerLink="/login" style="margin-right: 5px"><span class="glyphicon glyphicon-log-in">Войти</span></a>
+                <a routerLink="/registration" routerLinkActive="active" style="margin-right: 5px">Регистрация</a>
+            </span>
+        </div>
+        <div style="padding-top: 15px;">
+            <a routerLink="/home" routerLinkActive="active" class="tour-head">Домашняя страница</a>
+            <span  *ngIf="hasManagerAuthority() || hasAdminAuthority()">
+                <a routerLink="/all-country" routerLinkActive="active" class="tour-head">Работа с турами</a>
+            </span>
+            <span *ngIf="isLoggedIn()">
+                <span><a routerLink="/mytours" routerLinkActive="active" class="tour-head">Мой кабинет</a></span>
+                <span><a class="tour-head" (click)="logout()">Выход</a></span>
             </span>
         </div>
     </div>

@@ -9,6 +9,7 @@ import {Hotel} from "../model/hotel";
 import {Tour} from "../model/tour";
 import {TourService} from "../service/tour.service";
 import {IMyOptions} from 'mydatepicker';
+import {User} from "../model/user";
 
 @Component({
     selector: 'all-country',
@@ -45,6 +46,8 @@ export class CountryComponent implements OnInit {
     editHotel: Boolean = false;
     addTour: Boolean = false;
     editTour: Boolean = false;
+    customer: User;
+    customerOpen: boolean = false;
 
     constructor(private countryService: CountryService, private townService: TownService,
                 private hotelService: HotelService, private tourService: TourService) {
@@ -52,7 +55,7 @@ export class CountryComponent implements OnInit {
 
     myDatePickerOptions: IMyOptions = {
         // other options...
-        height: '20px',
+        height: '30px',
         width: '150px',
         selectionTxtFontSize: '12px',
         dateFormat: 'dd.mm.yyyy',
@@ -72,7 +75,7 @@ export class CountryComponent implements OnInit {
             11: 'Нояб',
             12: 'Дек'
         },
-    }
+    };
 
     ngOnInit(): void {
         this.loadAllCountries();
@@ -85,8 +88,8 @@ export class CountryComponent implements OnInit {
     }
 
     private loadAllCountries() {
-        this.countryService.getCountries()
-            .subscribe(countriesFromService => this.countries = countriesFromService);
+        this.countryService.loadCountries()
+            .subscribe((countriesFromService) => this.countries = countriesFromService);
         this.loadAllTowns();
         this.selectedCountry = null;
         this.countryForm = new FormGroup({
@@ -122,6 +125,10 @@ export class CountryComponent implements OnInit {
     onSubmitResetCountry() {
         this.selectedCountry = null;
         this.onChangeCountry();
+        this.addCountry = false;
+        this.addTown = false;
+        this.addHotel = false;
+        this.addTour = false;
     }
 
 
@@ -131,7 +138,7 @@ export class CountryComponent implements OnInit {
     };
 
     private loadAllTowns() {
-        this.townService.getTowns()
+        this.townService.loadTowns()
             .subscribe((townsFromService) => this.handlerTown(townsFromService));
         this.loadAllHotels();
         this.townForm = new FormGroup({
@@ -170,7 +177,7 @@ export class CountryComponent implements OnInit {
     };
 
     private loadAllHotels() {
-        this.hotelService.getHotels()
+        this.hotelService.loadHotels()
             .subscribe((hotelsFromService) => this.handlerHotel(hotelsFromService));
         this.loading = false;
         this.hotelForm = new FormGroup({
@@ -242,7 +249,7 @@ export class CountryComponent implements OnInit {
        if (this.editCountry){
            country = this.selectedCountry;
            country.name = this.countryForm.value.countryName;
-           this.countryService.updateCountry(country)
+           this.countryService.update(country)
                .subscribe(
                    () => this.ngOnInit(),
                    error => this.errorCountryMsg(error));
@@ -250,7 +257,7 @@ export class CountryComponent implements OnInit {
            this.editCountry = false;
        }else{
            country = new Country(this.countryForm.value.countryName);
-           this.countryService.newCountry(country)
+           this.countryService.add(country)
                .subscribe(
                    () => this.ngOnInit(),
                    error => this.errorCountryMsg(error));
@@ -264,7 +271,7 @@ export class CountryComponent implements OnInit {
         if(this.editTown){
             town = this.selectedTown;
             town.name = this.townForm.value.townName;
-            this.townService.updateTown(town)
+            this.townService.update(town)
                 .subscribe(
                     () => this.loadAllTowns(),
                     error => this.errorTownMsg(error));
@@ -272,7 +279,7 @@ export class CountryComponent implements OnInit {
             this.editTown = false;
         }else{
             town = new Town(this.townForm.value.townName, this.selectedCountry);
-            this.townService.newTown(town)
+            this.townService.add(town)
                 .subscribe(
                     () => this.loadAllTowns(),
                     error => this.errorTownMsg(error));
@@ -287,14 +294,14 @@ export class CountryComponent implements OnInit {
            hotel = this.selectedHotel;
            hotel.name = this.hotelForm.value.hotelName;
            hotel.address = this.hotelForm.value.address;
-           this.hotelService.updateHotel(hotel)
+           this.hotelService.update(hotel)
                .subscribe(() => this.loadAllHotels(),
                    error => this.errorHotelMsg(error));
            this.addHotel = false;
            this.editHotel = false;
        }else{
            hotel = new Hotel(this.hotelForm.value.hotelName, this.hotelForm.value.address, this.selectedTown);
-           this.hotelService.newHotel(hotel)
+           this.hotelService.add(hotel)
                .subscribe(() => this.loadAllHotels(),
                    error => this.errorHotelMsg(error));
            this.addHotel = false;
@@ -317,12 +324,6 @@ export class CountryComponent implements OnInit {
         this.addTour = false;
         this.editTour = false;
         this.removeTourForm();
-        // this.tourForm = new FormGroup({
-        //     price: new FormControl('', Validators.required),
-        //     nights: new FormControl('', Validators.required),
-        //     persons: new FormControl('', Validators.required),
-        //     startDate: new FormControl('', Validators.required),
-        // });
     }
 
     onSubmitEditTour(tour: Tour) {
@@ -368,7 +369,7 @@ export class CountryComponent implements OnInit {
             tour.price = this.tourForm.value.price;
             tour.nights = this.tourForm.value.nights;
             tour.persons = this.tourForm.value.persons;
-            this.tourService.newTour(tour)
+            this.tourService.createTour(tour)
                 .subscribe(() => this.onSubmitFindTour(),
                     error => this.errorHotelMsg(error), );
             this.onSubmitAddTourCancel();
@@ -376,7 +377,7 @@ export class CountryComponent implements OnInit {
     }
 
     unBooking(tour: Tour): void {
-        tour && this.tourService.unBookingTour(tour)
+        tour && this.tourService.unBooking(tour)
             .subscribe(() => this.onSubmitFindTour(),
             error => this.errorHotelMsg(error));
     }
@@ -404,6 +405,20 @@ export class CountryComponent implements OnInit {
             startDate: new FormControl('', Validators.required),
         });
     }
+    onCustomer(tour: Tour){
+        this.customer = tour.user;
+        this.customerOpen = true;
+    }
+
+    onCustomerClose(){
+        this.customer = null;
+        this.customerOpen = false;
+    }
+
+    handlerFindTour = function(toursFromService) {
+        this.tours = toursFromService;
+        this.loading = false;
+    };
 
     onSubmitFindTour() {
         this.loading = true;
@@ -415,12 +430,7 @@ export class CountryComponent implements OnInit {
         tour.startDate = this.chooseDateForm.value.chooseStartDate.jsdate;
         tour.endDate = this.chooseDateForm.value.chooseEndDate.jsdate;
         this.tourService.findToursForManager(tour)
-            .subscribe(toursFromService => this.tours = toursFromService, error => this.errorFindTou(error),
-                () => this.afterFindTour());
-    }
-
-    private afterFindTour() {
-        this.loading = false;
+            .subscribe((toursFromService) => this.handlerFindTour(toursFromService), error => this.errorFindTou(error));
     }
 
     private errorCountryMsg(error): void {

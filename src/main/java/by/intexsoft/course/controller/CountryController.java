@@ -1,7 +1,5 @@
 package by.intexsoft.course.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,28 +28,34 @@ public class CountryController {
 	 * Return all {@link Country#name} in line
 	 */
 	@RequestMapping(value = "/country")
-	public List<Country> findAll() {
-		return countryService.findAll();
+	public ResponseEntity<?> findAll() {
+		LOGGER.info("Start findAll countries");
+		try {
+			return new ResponseEntity<>(countryService.findAll(), HttpStatus.OK);
+		} catch (Exception e) {
+			LOGGER.info("Error in findAll countries. " + e.getLocalizedMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@RequestMapping(value = "/country", method = RequestMethod.POST)
-	public ResponseEntity<?> addCountry(@RequestBody Country country) {
-		LOGGER.info("Start addCountry");
+	public ResponseEntity<?> add(@RequestBody Country country) {
+		LOGGER.info("Start add country");
 		try {
 			return new ResponseEntity<>(countryService.save(country), HttpStatus.CREATED);
 		} catch (Exception e) {
-			LOGGER.info("Error in addCountry. " + e.getLocalizedMessage());
+			LOGGER.info("Error in add country. " + e.getLocalizedMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@RequestMapping(value = "/country", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateCountry(@RequestBody Country country) {
-		LOGGER.info("start updateCountry");
+	public ResponseEntity<?> update(@RequestBody Country country) {
+		LOGGER.info("start update country");
 		try {
 			return new ResponseEntity<>(countryService.update(country), HttpStatus.OK);
 		} catch (Exception e) {
-			LOGGER.info("Error in updateCountry. " + e.getLocalizedMessage());
+			LOGGER.info("Error in update country. " + e.getLocalizedMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}

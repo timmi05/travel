@@ -1,7 +1,5 @@
 package by.intexsoft.course.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import by.intexsoft.course.model.Country;
-import by.intexsoft.course.model.Hotel;
 import by.intexsoft.course.model.Tour;
-import by.intexsoft.course.model.Town;
 import by.intexsoft.course.model.User;
 import by.intexsoft.course.service.TourService;
 
@@ -31,52 +26,36 @@ public class TourController {
 	private TourService tourService;
 
 	/**
-	 * Return all {@link Tour#name} in line
+	 * Return all {@link Tour#name} in line for users
 	 */
-	@RequestMapping(value = "/tour")
-	public List<Tour> findAllTours() {
-		return tourService.findAll();
-	}
-	
 	@RequestMapping(value = "/tours", method = RequestMethod.POST)
-	public List<Tour> findTours(@RequestBody Tour tour) {
+	public ResponseEntity<?> findTours(@RequestBody Tour tour) {
 		LOGGER.info("Start load tours");
-		return tourService.findTours(tour);
-	}	
-	
+		try {
+			return new ResponseEntity<>(tourService.findTours(tour), HttpStatus.OK);
+		} catch (Exception e) {
+			LOGGER.info("Error in getUserTours. " + e.getLocalizedMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	/**
+	 * Return all {@link Tour#name} in line for manager
+	 */
 	@RequestMapping(value = "/managertours", method = RequestMethod.POST)
-	public List<Tour> findToursForManager(@RequestBody Tour tour) {
+	public ResponseEntity<?> findToursForManager(@RequestBody Tour tour) {
 		LOGGER.info("Start load tours");
-		return tourService.findToursForManager(tour);
-	}	
-
-	/**
-	 * Return all {@link Tour#name} in line
-	 */
-	@RequestMapping(value = "/toursinhotel")
-	public List<Tour> findByTown(@RequestBody Hotel hotel) {
-		return tourService.findByHotel(hotel);
+		try {
+			return new ResponseEntity<>(tourService.findToursForManager(tour), HttpStatus.OK);
+		} catch (Exception e) {
+			LOGGER.info("Error in getUserTours. " + e.getLocalizedMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
-	/**
-	 * Return all {@link Tour#name} in line
-	 */
-	@RequestMapping(value = "/toursintown")
-	public List<Tour> findByTown(@RequestBody Town town) {
-		return tourService.findByTown(town);
-	}
-
-	/**
-	 * Return all {@link Tour#name} in line
-	 */
-	@RequestMapping(value = "/toursincountry")
-	public List<Tour> findByCountry(@RequestBody Country country) {
-		return tourService.findByCountry(country);
-	}
-	
-	@RequestMapping(value = "/mytour", method = RequestMethod.POST)
-	public ResponseEntity<?> getUserTours(@RequestBody User user) {
-		LOGGER.info("Start getUserTours");
+	@RequestMapping(value = "/mytours", method = RequestMethod.POST)
+	public ResponseEntity<?> loadUsersTours(@RequestBody User user) {
+		LOGGER.info("Start loadUserTours");
 		try {
 			return new ResponseEntity<>(tourService.findByUser(user), HttpStatus.OK);
 		} catch (Exception e) {
@@ -86,45 +65,45 @@ public class TourController {
 	}
 
 	@RequestMapping(value = "/tour", method = RequestMethod.PUT)
-	public ResponseEntity<?> addTour(@RequestBody Tour tour) {
-		LOGGER.info("Start addTour");
+	public ResponseEntity<?> create(@RequestBody Tour tour) {
+		LOGGER.info("Start create tour");
 		try {
 			return new ResponseEntity<>(tourService.save(tour), HttpStatus.CREATED);
 		} catch (Exception e) {
-			LOGGER.info("Error in addTour. " + e.getLocalizedMessage());
+			LOGGER.info("Error in create tour. " + e.getLocalizedMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@RequestMapping(value = "/booking", method = RequestMethod.POST)
-	public ResponseEntity<?> bookingTour(@RequestBody Tour tour) {
-		LOGGER.info("start updateTour");
+	public ResponseEntity<?> booking(@RequestBody Tour tour) {
+		LOGGER.info("start booking");
 		try {
 			return new ResponseEntity<>(tourService.booking(tour), HttpStatus.OK);
 		} catch (Exception e) {
-			LOGGER.info("Error in updateTour. " + e.getLocalizedMessage());
+			LOGGER.info("Error in booking. " + e.getLocalizedMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@RequestMapping(value = "/booking", method = RequestMethod.PUT)
-	public ResponseEntity<?> unBookingTour(@RequestBody Tour tour) {
-		LOGGER.info("start updateTour");
+	public ResponseEntity<?> unBooking(@RequestBody Tour tour) {
+		LOGGER.info("start unBooking");
 		try {
 			return new ResponseEntity<>(tourService.unBooking(tour), HttpStatus.OK);
 		} catch (Exception e) {
-			LOGGER.info("Error in updateTour. " + e.getLocalizedMessage());
+			LOGGER.info("Error in unBooking. " + e.getLocalizedMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	@RequestMapping(value = "/updatetour", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateTourByManager(@RequestBody Tour tour) {
-		LOGGER.info("start updateTour");
+
+	@RequestMapping(value = "/tour", method = RequestMethod.POST)
+	public ResponseEntity<?> update(@RequestBody Tour tour) {
+		LOGGER.info("start update tour");
 		try {
 			return new ResponseEntity<>(tourService.update(tour), HttpStatus.OK);
 		} catch (Exception e) {
-			LOGGER.info("Error in updateTour. " + e.getLocalizedMessage());
+			LOGGER.info("Error in update tour. " + e.getLocalizedMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}

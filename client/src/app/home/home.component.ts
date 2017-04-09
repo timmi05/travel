@@ -43,9 +43,9 @@ export class HomeComponent  extends Access implements OnInit {
 
     myDatePickerOptions: IMyOptions = {
         // other options...
-        height: '20px',
+        height: '30px',
         width: '150px',
-        selectionTxtFontSize: '12px',
+        selectionTxtFontSize: '13px',
         dateFormat: 'dd.mm.yyyy',
         todayBtnTxt: 'Сегодня',
         dayLabels: {su: 'Вс', mo: 'Пн', tu: 'Вт', we: 'Ср', th: 'Чт', fr: 'Пт', sa: 'Сб'},
@@ -74,7 +74,7 @@ export class HomeComponent  extends Access implements OnInit {
     }
 
     private loadAllCountries() {
-        this.countryService.getCountries()
+        this.countryService.loadCountries()
             .subscribe(countriesFromService => this.countries = countriesFromService);
         this.loadAllTowns();
         this.selectedCountry = null;
@@ -86,7 +86,7 @@ export class HomeComponent  extends Access implements OnInit {
     }
 
     private loadAllTowns() {
-        this.townService.getTowns()
+        this.townService.loadTowns()
             .subscribe(townsFromService => this.allTowns = townsFromService);
         this.loadAllHotels();
         this.towns = [];
@@ -94,7 +94,7 @@ export class HomeComponent  extends Access implements OnInit {
     }
 
     private loadAllHotels() {
-        this.hotelService.getHotels()
+        this.hotelService.loadHotels()
             .subscribe(hotelsFromService => this.allHotels = hotelsFromService);
         this.loading = false;
         this.selectedHotel = null;
@@ -143,7 +143,7 @@ export class HomeComponent  extends Access implements OnInit {
 
     onBooking(tour: Tour): void {
         tour.user = LoginService.getCurrentUser();
-        tour && this.tourService.bookingTour(tour)
+        tour && this.tourService.booking(tour)
             .subscribe(() => this.router.navigate(['mytours']), error => this.errorFindTou(error));
     }
 
