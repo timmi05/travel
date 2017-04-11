@@ -14,8 +14,6 @@ export class Tour {
     persons: number;
     startDate: Date;
     endDate: Date;
-    hot: boolean;
-    used: boolean;
     booking: Date;
     paid: boolean;
     archive: boolean;

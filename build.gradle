@@ -8,7 +8,6 @@ repositories {
 
 dependencies {
     compile 'org.springframework:spring-context:4.3.6.RELEASE' 
-//     compile 'org.springframework:spring-context-support:4.3.6.RELEASE'
     compile 'org.springframework:spring-webmvc:4.3.6.RELEASE'    
     compile 'org.springframework.data:spring-data-jpa:1.8.2.RELEASE'
     compile 'org.hibernate:hibernate-entitymanager:4.3.11.Final'
@@ -27,3 +26,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.springframework:spring-test:4.3.0.RELEASE'
 }
+
+war.dependsOn 'client:npm_run_build'
+
+war {
+    from "client/dist"
+}
+

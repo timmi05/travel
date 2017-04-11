@@ -17,7 +17,7 @@ public class ScheduleTask {
 	@Autowired
 	TourService tourService;
 	
-	@Scheduled(fixedDelay = 100000 )   //3600000)
+	@Scheduled(fixedDelay = 100000 )
     public void fixedDelaySchedule() {
        
 		Date today = new Date();
@@ -31,6 +31,10 @@ public class ScheduleTask {
 			long timeInMillisStartDate = calendar.getTimeInMillis();
 			if (timeInMillisNow > timeInMillisStartDate){
 				tour.archive = true;
+				if(!tour.paid){
+					tour.booking = null;
+					tour.user = null;
+				}
 				tourService.update(tour);
 			}
 		}		

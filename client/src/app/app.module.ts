@@ -4,7 +4,7 @@ import {FormsModule, ReactiveFormsModule}   from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {AppRoutingModule}  from './app-routing.module';
 import {AppComponent}   from './app.component';
-import {CountryComponent}   from './countries/country.component';
+import {TourComponent}   from './countries/tour.component';
 import {CountryService} from './service/country.service';
 import {LoginComponent} from "./authorization/login.component";
 import {HomeComponent} from "./home/home.component";
@@ -24,7 +24,7 @@ import {CustomerComponent} from "./customer/customer.component";
     imports: [MyDatePickerModule, BrowserModule, FormsModule,
         HttpModule, AppRoutingModule, CommonModule,
         ReactiveFormsModule, RouterModule],
-    declarations: [AppComponent, CountryComponent, LoginComponent,
+    declarations: [AppComponent, TourComponent, LoginComponent,
         HomeComponent, RegistrationComponent, CustomerComponent],
     providers: [{
         provide: LocationStrategy,

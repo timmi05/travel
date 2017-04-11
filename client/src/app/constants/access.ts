@@ -13,8 +13,4 @@ export class Access{
     public hasManagerAuthority(): boolean {
         return AuthorizationGuard.hasAuthority("ROLE_MANAGER");
     }
-
-    public hasUserAuthority(): boolean {
-        return  AuthorizationGuard.hasAuthority("ROLE_USER");
-    }
 }

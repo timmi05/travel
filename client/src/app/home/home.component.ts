@@ -35,6 +35,7 @@ export class HomeComponent  extends Access implements OnInit {
     startDate: Date;
     chooseStartDate: Date;
     chooseEndDate: Date;
+    errorFindTourMas: String;
 
     constructor(private countryService: CountryService, private townService: TownService,
                 private hotelService: HotelService, private tourService: TourService, private router: Router) {
@@ -94,6 +95,7 @@ export class HomeComponent  extends Access implements OnInit {
     }
 
     private loadAllHotels() {
+        this.errorFindTourMas = '';
         this.hotelService.loadHotels()
             .subscribe(hotelsFromService => this.allHotels = hotelsFromService);
         this.loading = false;
@@ -124,6 +126,7 @@ export class HomeComponent  extends Access implements OnInit {
     }
 
     onSubmitFindTour() {
+        this.errorFindTourMas = '';
         this.loading = true;
         this.tours = null;
         const tour: Tour = new Tour();
@@ -150,6 +153,6 @@ export class HomeComponent  extends Access implements OnInit {
     private errorFindTou(error): void {
         console.log(error);
         this.loading = false;
-        alert("Ошибка при загрузке информации, попробуйте выбрать другие условия для поиска!");
+        this.errorFindTourMas = 'Ошибка при загрузке информации, повторите попытку или обратитесь к администратору сайта';
     }
 }

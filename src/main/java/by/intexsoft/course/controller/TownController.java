@@ -25,7 +25,7 @@ public class TownController {
 	private TownService townService;
 
 	/**
-	 * Return all {@link Town#name} in line
+	 * Return all {@link Town}
 	 */
 	@RequestMapping(value = "/town")
 	public ResponseEntity<?> findAll() {
@@ -38,6 +38,9 @@ public class TownController {
 		}
 	}
 
+	/**
+	 * Add {@link Town}
+	 */
 	@RequestMapping(value = "/town", method = RequestMethod.POST)
 	public ResponseEntity<?> add(@RequestBody Town town) {
 		LOGGER.info("Start add town");
@@ -49,6 +52,9 @@ public class TownController {
 		}
 	}
 
+	/**
+	 * Update {@link Town}
+	 */
 	@RequestMapping(value = "/town", method = RequestMethod.PUT)
 	public ResponseEntity<?> update(@RequestBody Town town) {
 		LOGGER.info("start update town");

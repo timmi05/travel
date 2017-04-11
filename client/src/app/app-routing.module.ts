@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {Routes, RouterModule} from "@angular/router";
-import {CountryComponent} from "./countries/country.component";
+import {TourComponent} from "./countries/tour.component";
 import {HomeComponent} from "./home/home.component";
 import {AuthorizationGuard} from "./guard/authorization.guard";
 import {LoginComponent} from "./authorization/login.component";
@@ -8,7 +8,7 @@ import {RegistrationComponent} from "./registration/registration.component";
 import {CustomerComponent} from "./customer/customer.component";
 
 const routes: Routes = [
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
     {path: 'login', component: LoginComponent},
     {path: 'registration', component: RegistrationComponent},
@@ -19,8 +19,8 @@ const routes: Routes = [
         data: {roles: ['ROLE_USER', 'ROLE_MANAGER', 'ROLE_ADMIN']}
     },
     {
-        path: 'all-country',
-        component: CountryComponent,
+        path: 'tourswork',
+        component: TourComponent,
         canActivate: [AuthorizationGuard],
         data: {roles: ['ROLE_ADMIN', 'ROLE_MANAGER']}
     },

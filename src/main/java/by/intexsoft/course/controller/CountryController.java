@@ -25,7 +25,7 @@ public class CountryController {
 	private CountryService countryService;
 
 	/**
-	 * Return all {@link Country#name} in line
+	 * Return all {@link Country}
 	 */
 	@RequestMapping(value = "/country")
 	public ResponseEntity<?> findAll() {
@@ -38,6 +38,9 @@ public class CountryController {
 		}
 	}
 
+	/**
+	 * Add {@link Country}
+	 */
 	@RequestMapping(value = "/country", method = RequestMethod.POST)
 	public ResponseEntity<?> add(@RequestBody Country country) {
 		LOGGER.info("Start add country");
@@ -48,7 +51,10 @@ public class CountryController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
+	/**
+	 * Update {@link Country}
+	 */
 	@RequestMapping(value = "/country", method = RequestMethod.PUT)
 	public ResponseEntity<?> update(@RequestBody Country country) {
 		LOGGER.info("start update country");

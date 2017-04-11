@@ -1,5 +1,5 @@
 <div class="container">
-    <div  class="container-tour">
+    <div class="container-tour">
         <form [formGroup]="chooseDateForm" novalidate>
             <span style="margin-right: 11px;">
                 <my-date-picker name="choosestartdate" [options]="myDatePickerOptions"
@@ -13,42 +13,46 @@
         <table>
             <tr>
                 <td class="td-place">
-                    <tr>
-                            <select class="form-control select-place" [(ngModel)]="selectedCountry" (change)="onChangeCountry()">
-                                <option *ngFor="let country of countries"
-                                        [ngValue]='country'>{{country.name}}
-                                </option>
-                            </select>
+            <tr>
+                <select class="form-control select-place" [(ngModel)]="selectedCountry" (change)="onChangeCountry()">
+                    <option *ngFor="let country of countries"
+                            [ngValue]='country'>{{country.name}}
+                    </option>
+                </select>
 
-                    </tr>
-                </td>
-                <td class="td-place">
-                    <tr>
-                        <select class="form-control select-place" *ngIf="selectedCountry" [(ngModel)]="selectedTown" (change)="onChangeTown()">
-                            <option *ngFor="let town of towns" [ngValue]='town'>{{town.name}}</option>
-                        </select>
-                    </tr>
-                </td>
-                <td class="td-place">
-                    <tr>
-                        <select class="form-control select-place" *ngIf="selectedTown" [(ngModel)]="selectedHotel">
-                            <option *ngFor="let hotel of hotels" [ngValue]='hotel'>{{hotel && hotel.name + " " + hotel.address}}</option>
-                        </select>
-                    </tr>
-                </td>
+            </tr>
+            </td>
+            <td class="td-place">
+                <tr>
+                    <select class="form-control select-place" *ngIf="selectedCountry" [(ngModel)]="selectedTown"
+                            (change)="onChangeTown()">
+                        <option *ngFor="let town of towns" [ngValue]='town'>{{town.name}}</option>
+                    </select>
+                </tr>
+            </td>
+            <td class="td-place">
+                <tr>
+                    <select class="form-control select-place" *ngIf="selectedTown" [(ngModel)]="selectedHotel">
+                        <option *ngFor="let hotel of hotels" [ngValue]='hotel'>{{hotel && hotel.name + " " +
+                            hotel.address}}
+                        </option>
+                    </select>
+                </tr>
+            </td>
             </tr>
         </table>
         <a *ngIf="selectedCountry" (click)="onSubmitResetCountry()">Сброс</a>
         <div class="tout-hr">
             <hr class="solid-hr">
         </div>
-            <div>
-                <form name="form-tour" (ngSubmit)="onSubmitFindTour()">
-                    <input name="submit"
-                           class="btn btn-primary btn-sm" type="submit"
-                           value="Найти"/>
-                </form>
-            </div>
+        <div>
+            <form name="form-tour" (ngSubmit)="onSubmitFindTour()">
+                <input id="button-find-tour" name="submit"
+                       class="btn btn-primary btn-sm" type="submit"
+                       value="Найти"/>
+            </form>
+        </div>
+        <div>{{errorFindTourMas}}</div>
         <div *ngIf="tours" class="panel">
             <table class="table table-striped">
                 <thead>
@@ -74,7 +78,8 @@
                     <td>{{tour.price}}</td>
                     <td>{{tour.country.name}}</td>
                     <td>
-                        <button class="btn btn-warning" *ngIf="hasAuthority()" (click)="onBooking(tour)">Забронировать</button>
+                        <button class="btn btn-warning" *ngIf="hasAuthority()" (click)="onBooking(tour)">Забронировать
+                        </button>
                     </td>
                 </tr>
                 </tbody>

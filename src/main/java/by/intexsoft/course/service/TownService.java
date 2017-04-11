@@ -18,7 +18,7 @@ public interface TownService {
 	List<Town> findAll();
 
 	/**
-	 * Find {@link Town}
+	 * Find {@link Town} by name
 	 */
 	Town findByName(String name);
 
@@ -32,7 +32,7 @@ public interface TownService {
 	 */
 	@Transactional
 	Town save(Town town);
-	
+
 	@Transactional
 	Town update(Town town);
 

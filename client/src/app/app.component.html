@@ -14,7 +14,7 @@
         <div style="padding-top: 15px;">
             <a routerLink="/home" routerLinkActive="active" class="tour-head">Домашняя страница</a>
             <span  *ngIf="hasManagerAuthority() || hasAdminAuthority()">
-                <a routerLink="/all-country" routerLinkActive="active" class="tour-head">Работа с турами</a>
+                <a routerLink="/tourswork" routerLinkActive="active" class="tour-head">Работа с турами</a>
             </span>
             <span *ngIf="isLoggedIn()">
                 <span><a routerLink="/mytours" routerLinkActive="active" class="tour-head">Мой кабинет</a></span>

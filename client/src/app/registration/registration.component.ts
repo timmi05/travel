@@ -26,7 +26,7 @@ export class RegistrationComponent implements OnInit {
             firstName: new FormControl('', Validators.required),
             lastName: new FormControl('', Validators.required),
             phoneNumber: new FormControl('', Validators.required),
-            mail: new FormControl('', Validators.required),
+            mail: new FormControl(''),
         });
     }
 

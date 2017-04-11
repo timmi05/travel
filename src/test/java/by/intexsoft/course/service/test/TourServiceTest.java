@@ -78,7 +78,6 @@ public class TourServiceTest {
 			tour.persons = 3;
 			tour.startDate = new Date();
 			tour.endDate = new Date();
-			tour.hot = true;
 			tour.country = ñountry;
 			tour.town = town;
 			tour.paid = false;
@@ -97,18 +96,18 @@ public class TourServiceTest {
 		townService.deleteAll();
 		ñountryService.deleteAll();
 	}
-	
+
 	@Test
 	public void findByName() {
-		Town someTown = townService.findByName("town2");	
-		List<Tour> tours = tourService.findByTown(someTown);			
+		Town someTown = townService.findByName("town2");
+		List<Tour> tours = tourService.findByTown(someTown);
 		Assert.assertTrue(tours.size() == 1);
 	}
-	
+
 	@Test
 	public void findByid() {
-		Town someTown = townService.findByName("town2");	
-		List<Tour> tours = tourService.findByTown(someTown);			
+		Town someTown = townService.findByName("town2");
+		List<Tour> tours = tourService.findByTown(someTown);
 		Tour newTour = tours.get(0);
 		Tour lastTour = tourService.booking(newTour);
 		Assert.assertNotNull(lastTour);

@@ -17,7 +17,7 @@ public interface UserService {
 	List<User> findAll();
 
 	/**
-	 * Find {@link User}
+	 * Find {@link User} by username
 	 */
 	User findByUsername(String username);
 

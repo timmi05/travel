@@ -24,6 +24,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	/**
+	 * Registration new {@link User}
+	 */
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ResponseEntity<?> registration(@RequestBody User user) {
 		LOGGER.info("Start registration user");

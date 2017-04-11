@@ -9,9 +9,8 @@ import {Access} from "./constants/access";
     templateUrl: './app.component.html',
     styleUrls: ['app.component.css'],
 })
-export class AppComponent extends Access{
+export class AppComponent extends Access {
     welcomeName: string;
-
 
     constructor(private router: Router, private loginService: LoginService) {
         super();

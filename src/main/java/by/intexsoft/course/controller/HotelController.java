@@ -25,7 +25,7 @@ public class HotelController {
 	private HotelService hotelService;
 
 	/**
-	 * Return all {@link Hotel#name} in line
+	 * Return all {@link Hotel}
 	 */
 	@RequestMapping(value = "/hotel")
 	public ResponseEntity<?> findAll() {
@@ -38,6 +38,9 @@ public class HotelController {
 		}
 	}
 
+	/**
+	 * Add {@link Hotel}
+	 */
 	@RequestMapping(value = "/hotel", method = RequestMethod.POST)
 	public ResponseEntity<?> add(@RequestBody Hotel hotel) {
 		LOGGER.info("Start add hotel");
@@ -49,6 +52,9 @@ public class HotelController {
 		}
 	}
 
+	/**
+	 * Update {@link Hotel}
+	 */
 	@RequestMapping(value = "/hotel", method = RequestMethod.PUT)
 	public ResponseEntity<?> update(@RequestBody Hotel hotel) {
 		LOGGER.info("start update hotel");

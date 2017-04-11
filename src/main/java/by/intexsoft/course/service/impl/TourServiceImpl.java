@@ -104,7 +104,7 @@ public class TourServiceImpl implements TourService {
 		}
 		return tourRepository.findByBookingIsNullAndArchiveFalse(new Sort("startDate"));
 	}
-	
+
 	@Override
 	public List<Tour> findToursForManager(Tour tour) {
 		if (tour.endDate != null) {
@@ -114,45 +114,44 @@ public class TourServiceImpl implements TourService {
 			tour.endDate = calendar.getTime();
 		}
 		if (tour.hotel != null && tour.startDate != null && tour.endDate != null) {
-			return tourRepository.findByArchiveFalseAndHotelAndStartDateAfterAndEndDateBefore(
-					tour.hotel, tour.startDate, tour.endDate, new Sort("startDate"));
+			return tourRepository.findByArchiveFalseAndHotelAndStartDateAfterAndEndDateBefore(tour.hotel,
+					tour.startDate, tour.endDate, new Sort("startDate"));
 		}
 		if (tour.town != null && tour.startDate != null && tour.endDate != null) {
-			return tourRepository.findByArchiveFalseAndHotelTownAndStartDateAfterAndEndDateBefore(
-					tour.town, tour.startDate, tour.endDate, new Sort("startDate"));
+			return tourRepository.findByArchiveFalseAndHotelTownAndStartDateAfterAndEndDateBefore(tour.town,
+					tour.startDate, tour.endDate, new Sort("startDate"));
 		}
 		if (tour.country != null && tour.startDate != null && tour.endDate != null) {
-			return tourRepository
-					.findByArchiveFalseAndHotelTownCountryAndStartDateAfterAndEndDateBefore(
-							tour.country, tour.startDate, tour.endDate, new Sort("startDate"));
+			return tourRepository.findByArchiveFalseAndHotelTownCountryAndStartDateAfterAndEndDateBefore(tour.country,
+					tour.startDate, tour.endDate, new Sort("startDate"));
 		}
 		if (tour.startDate != null && tour.endDate != null) {
-			return tourRepository.findByArchiveFalseAndStartDateAfterAndEndDateBefore(tour.startDate,
-					tour.endDate, new Sort("startDate"));
+			return tourRepository.findByArchiveFalseAndStartDateAfterAndEndDateBefore(tour.startDate, tour.endDate,
+					new Sort("startDate"));
 		}
 		if (tour.hotel != null && tour.startDate != null) {
-			return tourRepository.findByArchiveFalseAndHotelAndStartDateAfter(tour.hotel,
-					tour.startDate, new Sort("startDate"));
+			return tourRepository.findByArchiveFalseAndHotelAndStartDateAfter(tour.hotel, tour.startDate,
+					new Sort("startDate"));
 		}
 		if (tour.town != null && tour.startDate != null) {
-			return tourRepository.findByArchiveFalseAndHotelTownAndStartDateAfter(tour.town,
-					tour.startDate, new Sort("startDate"));
+			return tourRepository.findByArchiveFalseAndHotelTownAndStartDateAfter(tour.town, tour.startDate,
+					new Sort("startDate"));
 		}
 		if (tour.country != null && tour.startDate != null) {
-			return tourRepository.findByArchiveFalseAndHotelTownCountryAndStartDateAfter(tour.country,
-					tour.startDate, new Sort("startDate"));
+			return tourRepository.findByArchiveFalseAndHotelTownCountryAndStartDateAfter(tour.country, tour.startDate,
+					new Sort("startDate"));
 		}
 		if (tour.hotel != null && tour.endDate != null) {
 			return tourRepository.findByArchiveFalseAndHotelAndEndDateBefore(tour.hotel, tour.endDate,
 					new Sort("startDate"));
 		}
 		if (tour.town != null && tour.endDate != null) {
-			return tourRepository.findByArchiveFalseAndHotelTownAndEndDateBefore(tour.town,
-					tour.endDate, new Sort("startDate"));
+			return tourRepository.findByArchiveFalseAndHotelTownAndEndDateBefore(tour.town, tour.endDate,
+					new Sort("startDate"));
 		}
 		if (tour.country != null && tour.endDate != null) {
-			return tourRepository.findByArchiveFalseAndHotelTownCountryAndEndDateBefore(tour.country,
-					tour.endDate, new Sort("startDate"));
+			return tourRepository.findByArchiveFalseAndHotelTownCountryAndEndDateBefore(tour.country, tour.endDate,
+					new Sort("startDate"));
 		}
 		if (tour.hotel != null) {
 			return tourRepository.findByArchiveFalseAndHotel(tour.hotel, new Sort("startDate"));
@@ -161,24 +160,16 @@ public class TourServiceImpl implements TourService {
 			return tourRepository.findByArchiveFalseAndHotelTown(tour.town, new Sort("startDate"));
 		}
 		if (tour.country != null) {
-			return tourRepository.findByArchiveFalseAndHotelTownCountry(tour.country,
-					new Sort("startDate"));
+			return tourRepository.findByArchiveFalseAndHotelTownCountry(tour.country, new Sort("startDate"));
 		}
 		if (tour.startDate != null) {
-			return tourRepository.findByArchiveFalseAndStartDateAfter(tour.startDate,
-					new Sort("startDate"));
+			return tourRepository.findByArchiveFalseAndStartDateAfter(tour.startDate, new Sort("startDate"));
 		}
 		if (tour.endDate != null) {
-			return tourRepository.findByArchiveFalseAndEndDateBefore(tour.endDate,
-					new Sort("startDate"));
+			return tourRepository.findByArchiveFalseAndEndDateBefore(tour.endDate, new Sort("startDate"));
 		}
 		return tourRepository.findByArchiveFalse(new Sort("startDate"));
 	}
-
-	// @Override
-	// public Tour findByName(String name) {
-	// return tourRepository.findByName(name);
-	// }
 
 	@Override
 	public List<Tour> findByUser(User user) {
@@ -220,7 +211,6 @@ public class TourServiceImpl implements TourService {
 		ñalendar.add(Calendar.DATE, tour.nights);
 		tour.endDate = ñalendar.getTime();
 		tour.archive = false;
-		tour.hot = false;
 		tour.paid = false;
 		tour.used = false;
 		return tourRepository.saveAndFlush(tour);

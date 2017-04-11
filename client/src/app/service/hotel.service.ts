@@ -14,7 +14,7 @@ export class HotelService {
     loadHotels() {
         return this.http.get(this.hotelUrl)
             .map((response: Response) => {
-                if(response.status != 200) {
+                if (response.status != 200) {
                     throw new Error('Error while loading all entities! code status: ' + response.status);
                 } else {
                     return response.json();

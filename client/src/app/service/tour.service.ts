@@ -25,7 +25,7 @@ export class TourService {
         const options = new RequestOptions({headers: headers});
         return this.http.post(this.myUrl, body, options)
             .map((response: Response) => {
-                if(response.status != 200) {
+                if (response.status != 200) {
                     throw new Error('Error while loading all entities! code status: ' + response.status);
                 } else {
                     return response.json();
@@ -36,14 +36,13 @@ export class TourService {
     findTours(tour: Tour) {
         const body = tour;
         return this.http.post(this.toursUrl, body)
-        .map((response: Response) => {
-            if(response.status != 200) {
-                throw new Error('Error while loading all entities! code status: ' + response.status);
-            } else {
-                return response.json();
-            }
-        })
-
+            .map((response: Response) => {
+                if (response.status != 200) {
+                    throw new Error('Error while loading all entities! code status: ' + response.status);
+                } else {
+                    return response.json();
+                }
+            })
     }
 
     findToursForManager(tour: Tour) {
@@ -55,7 +54,7 @@ export class TourService {
         const options = new RequestOptions({headers: headers});
         return this.http.post(this.managerToursUrl, body, options)
             .map((response: Response) => {
-                if(response.status != 200) {
+                if (response.status != 200) {
                     throw new Error('Error while loading all entities! code status: ' + response.status);
                 } else {
                     return response.json();

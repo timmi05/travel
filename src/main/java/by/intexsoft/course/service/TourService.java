@@ -19,26 +19,26 @@ public interface TourService {
 	 * Find all {@link Tour}
 	 */
 	List<Tour> findAll();
-	
+
+	/**
+	 * Find {@link Tour} by id
+	 */
+	Tour findById(Long id);
+
 	/**
 	 * Find {@link Tour} for archive
 	 */
 	List<Tour> findForArchive();
 
 	/**
-	 * Find all {@link User}
+	 * Find all {@link Tour}
 	 */
 	List<Tour> findTours(Tour tour);
 
 	/**
-	 * Find all {@link User}
+	 * Find {@link Tour} for manager
 	 */
 	List<Tour> findToursForManager(Tour tour);
-	
-	// /**
-	// * Find {@link Tour}
-	// */
-	// Tour findByName(String name);
 
 	/**
 	 * Find List {@link Tour}s by {@link User}
@@ -78,12 +78,10 @@ public interface TourService {
 
 	@Transactional
 	Tour update(Tour tour);
-		
-	Tour findById(Long id);
 
 	@Transactional
 	Tour booking(Tour tour);
-	
+
 	@Transactional
 	Tour unBooking(Tour tour);
 

@@ -9,7 +9,6 @@ public interface TokenService {
 
 	/**
 	 * Generate token
-	 * 
 	 * @return generated token
 	 */
 	String generate(User user, String password);

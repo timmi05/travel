@@ -3,7 +3,6 @@ package by.intexsoft.course.service.impl;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ import io.jsonwebtoken.Jwts;
 @Service
 public class TokenAuthenticationServiceImpl implements TokenAuthenticationService {
 
-//	@Value("security.token.secret.key")
 	private String secretKey = "creck";
 
 	private final static String AUTH_HEADER_NAME = "x-auth-token";

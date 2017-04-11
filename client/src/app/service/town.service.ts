@@ -14,7 +14,7 @@ export class TownService {
     loadTowns() {
         return this.http.get(this.townsUrl)
             .map((response: Response) => {
-                if(response.status != 200) {
+                if (response.status != 200) {
                     throw new Error('Error while loading all entities! code status: ' + response.status);
                 } else {
                     return response.json();

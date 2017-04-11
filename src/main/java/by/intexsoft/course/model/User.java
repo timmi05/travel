@@ -9,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  * Model for users table
@@ -31,12 +30,6 @@ public class User extends AbstractModel {
 	 */
 	@Column
 	public String password;
-
-	/**
-	 * Confirm user password
-	 */
-	@Transient
-	public String confirmPassword;
 
 	/**
 	 * First Name of user

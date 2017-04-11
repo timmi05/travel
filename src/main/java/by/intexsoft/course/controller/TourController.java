@@ -26,7 +26,7 @@ public class TourController {
 	private TourService tourService;
 
 	/**
-	 * Return all {@link Tour#name} in line for users
+	 * Return all {@link Tour#name} for users
 	 */
 	@RequestMapping(value = "/tours", method = RequestMethod.POST)
 	public ResponseEntity<?> findTours(@RequestBody Tour tour) {
@@ -40,7 +40,7 @@ public class TourController {
 	}
 
 	/**
-	 * Return all {@link Tour#name} in line for manager
+	 * Return all {@link Tour#name} for manager
 	 */
 	@RequestMapping(value = "/managertours", method = RequestMethod.POST)
 	public ResponseEntity<?> findToursForManager(@RequestBody Tour tour) {

@@ -18,12 +18,6 @@ public class Tour extends AbstractModel {
 	private static final long serialVersionUID = -782215207665987375L;
 
 	/**
-	 * Description of nights of tour
-	 */
-	@Column
-	public String description;
-
-	/**
 	 * {@link Hotel} for the tour
 	 */
 	@ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER)
@@ -70,12 +64,6 @@ public class Tour extends AbstractModel {
 	 */
 	@Column(name = "end_date")
 	public Date endDate;
-
-	/**
-	 * Hot tour
-	 */
-	@Column
-	public Boolean hot;
 
 	/**
 	 * Tour for {@link User}
